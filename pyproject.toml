@@ -20,7 +20,7 @@ jinniuai-data-store = { version = "0.1.10", source = "jinniuai" }
 jinniuai_config = { version = "0.1.6", source = "jinniuai" }
 dolphindb = "^3.0.1.1"
 loguru = "^0.7.2"
-
+ipython = '*'
 
 [tool.poetry.group.dev.dependencies]
 openbb-devtools = { version = "^1.0.0" }
