@@ -10,7 +10,6 @@ from openbb_core.provider.abstract.query_params import QueryParams
 from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 
 
-
 class PerShareIndicatorQueryParams(QueryParams):
     """财务指标-每股 查询"""
 
