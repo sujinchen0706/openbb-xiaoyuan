@@ -1,16 +1,17 @@
 from typing import Any, Dict, List, Optional
 
-import requests
 from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.data import Data
 from openbb_core.provider.abstract.fetcher import Fetcher
-from openbb_core.provider.abstract.query_params import QueryParams
 from pydantic import Field
-from openbb_core.provider.utils.helpers import amake_request
-from openbb_xiaoyuan.standard_models.enterprise_life_cycle import EnterpriseLifeCycleQueryParams, \
-    EnterpriseLifeCycleData
+from openbb_xiaoyuan.standard_models.enterprise_life_cycle import (
+    EnterpriseLifeCycleQueryParams,
+    EnterpriseLifeCycleData,
+)
 
 reader = get_jindata_reader()
+
+
 class XYEnterpriseLifeCycleQueryParams(EnterpriseLifeCycleQueryParams):
     symbol: str = Field(description="Symbol to query.")
 
@@ -45,14 +46,13 @@ class XYEnterpriseLifeCycleFetcher(
 ):
     @staticmethod
     def transform_query(params: Dict[str, Any]) -> XYEnterpriseLifeCycleQueryParams:
-
         return XYEnterpriseLifeCycleQueryParams(**params)
 
     @staticmethod
     def extract_data(
-            query: XYEnterpriseLifeCycleQueryParams,
-            credentials: Optional[Dict[str, str]],
-            **kwargs: Any,
+        query: XYEnterpriseLifeCycleQueryParams,
+        credentials: Optional[Dict[str, str]],
+        **kwargs: Any,
     ) -> List[dict]:
         """Return the raw data from the House Disclosure endpoint."""
         api_key = credentials.get("fmp_api_key") if credentials else ""
@@ -60,12 +60,10 @@ class XYEnterpriseLifeCycleFetcher(
         results: List[Dict] = []
         df = reader.get_symbols(symbols)
 
-
         return results
 
     @staticmethod
     def transform_data(
-            query: XYEnterpriseLifeCycleQueryParams, data: List[dict], **kwargs: Any
+        query: XYEnterpriseLifeCycleQueryParams, data: List[dict], **kwargs: Any
     ) -> List[XYEnterpriseLifeCycleData]:
-
         return [XYEnterpriseLifeCycleData(**d) for d in data]

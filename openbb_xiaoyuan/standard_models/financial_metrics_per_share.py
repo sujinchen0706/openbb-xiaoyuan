@@ -3,7 +3,7 @@
 from datetime import date as dateType
 from typing import Optional
 
-from pydantic import Field, NonNegativeInt, field_validator
+from pydantic import Field, field_validator
 
 from openbb_core.provider.abstract.data import Data
 from openbb_core.provider.abstract.query_params import QueryParams
@@ -14,9 +14,6 @@ class PerShareIndicatorQueryParams(QueryParams):
     """财务指标-每股 查询"""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
-    limit: Optional[NonNegativeInt] = Field(
-        default=5, description=QUERY_DESCRIPTIONS.get("limit", "")
-    )
 
     @field_validator("symbol", mode="before", check_fields=False)
     @classmethod

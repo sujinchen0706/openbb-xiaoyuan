@@ -19,20 +19,6 @@ FIN_METRICS_PER_SHARE = [
     "每股股东自由现金流量（元）",
 ]
 
-
-# 提取函数
-def get_report_month(period: str) -> str:
-    period_to_month = {"fy": "", "q1": "03", "q2": "06", "q3": "09", "q4": "12"}
-    if period not in period_to_month:
-        raise ValueError(f"Invalid period: {period}")
-    month = period_to_month[period]
-    return (
-        f" and monthOfYear(报告期) = {month} context by symbol, factor_name, groupByTime(报告期) order by 报告期 limit -4;"
-        if month
-        else "context by symbol, factor_name, groupByTime(报告期) order by 报告期 limit -1;"
-    )
-
-
 groupByTime_sql = """
 def groupByTime(time) {
     return substr(string(time), 5)
@@ -51,3 +37,24 @@ def get_query_financel_sql(factor_names: list, symbol: str, report_month: str) -
         t = select value from t pivot by factor_name,报告期;
         t
         """
+
+
+def get_report_month(period: str) -> str:
+    period_to_month = {
+        "fy": "",
+        "q1": "03",
+        "q2ytd": "06",
+        "q3ytd": "09",
+        "annual": "12",
+    }
+    if period not in period_to_month:
+        raise ValueError(f"Invalid period: {period}")
+    month = period_to_month[period]
+    return (
+        (
+            f" and monthOfYear(报告期) = {month} context by symbol, "
+            f"factor_name, groupByTime(报告期) order by 报告期 limit -4;"
+        )
+        if month
+        else "context by symbol, factor_name, groupByTime(报告期) order by 报告期 limit -1;"
+    )

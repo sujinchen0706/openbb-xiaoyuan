@@ -2,6 +2,9 @@
 
 from openbb_core.provider.abstract.provider import Provider
 from openbb_xiaoyuan.models.example import ExampleFetcher
+from openbb_xiaoyuan.models.financial_metrics_per_share import (
+    XiaoYuanPerShareIndicatorFetcher,
+)
 
 # mypy: disable-error-code="list-item"
 
@@ -16,5 +19,6 @@ provider = Provider(
     # The dictionary key is the fetcher's name, used in the `router.py`.
     fetcher_dict={
         "Example": ExampleFetcher,
-    }
+        "XiaoYuanPerShareIndicatorFetcher": XiaoYuanPerShareIndicatorFetcher,
+    },
 )

@@ -1,8 +1,7 @@
 """企业生命周期"""
 
-import datetime
 from datetime import date as dateType
-from typing import Optional, Union
+from typing import Optional
 
 from openbb_core.provider.abstract.data import Data
 from openbb_core.provider.abstract.query_params import QueryParams
