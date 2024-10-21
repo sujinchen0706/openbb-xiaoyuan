@@ -6,13 +6,17 @@ from jinniuai_data_store.reader import get_jindata_reader
 
 from openbb_core.provider.abstract.fetcher import Fetcher
 
-from openbb_xiaoyuan.standard_models.calculate_reduction_percentage import CalculateReductionPercentageQueryParams, \
-    CalculateReductionPercentageData
+from openbb_xiaoyuan.standard_models.calculate_reduction_percentage import (
+    CalculateReductionPercentageQueryParams,
+    CalculateReductionPercentageData,
+)
 
 reader = get_jindata_reader()
 
 
-class XYCalculateReductionPercentageQueryParams(CalculateReductionPercentageQueryParams):
+class XYCalculateReductionPercentageQueryParams(
+    CalculateReductionPercentageQueryParams
+):
     pass
 
 
@@ -27,14 +31,16 @@ class XYCalculateReductionPercentageFetcher(
     ]
 ):
     @staticmethod
-    def transform_query(params: Dict[str, Any]) -> XYCalculateReductionPercentageQueryParams:
+    def transform_query(
+        params: Dict[str, Any],
+    ) -> XYCalculateReductionPercentageQueryParams:
         return XYCalculateReductionPercentageQueryParams(**params)
 
     @staticmethod
     def extract_data(
-            query: XYCalculateReductionPercentageQueryParams,
-            credentials: Optional[Dict[str, str]],
-            **kwargs: Any,
+        query: XYCalculateReductionPercentageQueryParams,
+        credentials: Optional[Dict[str, str]],
+        **kwargs: Any,
     ) -> List[dict]:
         symbols = query.symbol.split(",")
         start_date = reader.convert_to_db_date_format(query.start_date)
@@ -48,13 +54,15 @@ class XYCalculateReductionPercentageFetcher(
             symbols=symbols,
         )
 
-        data = df.to_dict(orient='records')
+        data = df.to_dict(orient="records")
         return data
 
     @staticmethod
     def transform_data(
-            query: XYCalculateReductionPercentageQueryParams, data: List[dict], **kwargs: Any
+        query: XYCalculateReductionPercentageQueryParams,
+        data: List[dict],
+        **kwargs: Any,
     ) -> List[XYCalculateReductionPercentageData]:
         if isinstance(data, pd.DataFrame):
-            data = data.to_dict(orient='records')
+            data = data.to_dict(orient="records")
         return [XYCalculateReductionPercentageData(**d) for d in data]

@@ -1,4 +1,5 @@
 """企业生命周期"""
+
 import datetime
 from datetime import date as dateType
 from typing import Optional, Union
@@ -11,8 +12,10 @@ from openbb_core.provider.utils.descriptions import (
 )
 from pydantic import Field, field_validator
 
+
 class EnterpriseLifeCycleQueryParams(QueryParams):
     """企业生命周期查询参数"""
+
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", []))
     start_date: str = Field(
         default=None,
@@ -23,8 +26,10 @@ class EnterpriseLifeCycleQueryParams(QueryParams):
         description=QUERY_DESCRIPTIONS.get("end_date", ""),
     )
 
+
 class EnterpriseLifeCycleData(Data):
     """企业生命周期数据"""
+
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
     )

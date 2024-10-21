@@ -30,9 +30,9 @@ class XYStNameFetcher(
 
     @staticmethod
     def extract_data(
-            query: XYStNameQueryParams,
-            credentials: Optional[Dict[str, str]],
-            **kwargs: Any,
+        query: XYStNameQueryParams,
+        credentials: Optional[Dict[str, str]],
+        **kwargs: Any,
     ) -> List[dict]:
         symbols = query.symbol.split(",")
         start_date = reader.convert_to_db_date_format(query.start_date)
@@ -46,13 +46,13 @@ class XYStNameFetcher(
             symbols=symbols,
         )
 
-        data = df.to_dict(orient='records')
+        data = df.to_dict(orient="records")
         return data
 
     @staticmethod
     def transform_data(
-            query: XYStNameQueryParams, data: List[dict], **kwargs: Any
+        query: XYStNameQueryParams, data: List[dict], **kwargs: Any
     ) -> List[XYStNameData]:
         if isinstance(data, pd.DataFrame):
-            data = data.to_dict(orient='records')
+            data = data.to_dict(orient="records")
         return [XYStNameData(**d) for d in data]
