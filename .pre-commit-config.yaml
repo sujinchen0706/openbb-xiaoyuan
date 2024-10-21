@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+        exclude: 'construct.yaml'
+      - id: end-of-file-fixer
+        exclude_types: [css, markdown, text, svg]
+      - id: trailing-whitespace
+        exclude_types: [html, markdown, text]
+      - id: check-merge-conflict
+      - id: detect-private-key
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.4.5"
+    hooks:
+      - id: ruff
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        additional_dependencies: [tomli]
+        name: pydocstyle
+        entry: pydocstyle
+        language: python
+        types: [python]
+        files: '^(openbb_platform/|cli/).*\.py$'
+        exclude: 'tests/.*\.py|openbb_platform/test_.*\.py'
+        args: ["--config=ruff.toml"]

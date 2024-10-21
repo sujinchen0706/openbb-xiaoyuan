@@ -1,26 +1,13 @@
-# OpenBB Platform v4 Cookiecutter Template
+# OpenBB Yahoo!Finance Provider
 
-## Introduction
+This extension integrates the [XiaoYuan](https://jinniuai.feishu.cn/sheets/shtcnIHASIEQ20MghqqZce2CFwc) data provider into the OpenBB Platform.
 
-This is the generated cookiecutter template for the OpenBB Platform v4.
-It is used to help you create a new extension that can be integrated into the existing structure of the OpenBB Platform.
+## Installation
 
-With it you can:
+To install the extension:
 
-- Create a new extension
-- Build custom commands
-- Interact with the standardization framework
-- Build custom services and applications on top of the framework
+```bash
+pip install openbb-xiaoyuan
+```
 
-## Getting Started
-
-We recommend you check out the files in the following order:
-
-* `openbb_xiaoyuan/README.md`
-* `openbb_xiaoyuan/models/example.py`
-* `openbb_xiaoyuan/provider.py`
-* `openbb_xiaoyuan/router.py`
-
----
-
-🦋 Made with [openbb cookiecutter](https://github.com/openbb-finance/openbb-cookiecutter).
+Documentation available [here](https://docs.openbb.co/platform/developer_guide/contributing).

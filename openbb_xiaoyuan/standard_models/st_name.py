@@ -1,8 +1,7 @@
 """企业生命周期"""
 
-import datetime
 from datetime import date as dateType
-from typing import Optional, Union
+from typing import Optional
 
 from openbb_core.provider.abstract.data import Data
 from openbb_core.provider.abstract.query_params import QueryParams
@@ -10,11 +9,11 @@ from openbb_core.provider.utils.descriptions import (
     DATA_DESCRIPTIONS,
     QUERY_DESCRIPTIONS,
 )
-from pydantic import Field, field_validator
+from pydantic import Field
 
 
-class EnterpriseLifeCycleQueryParams(QueryParams):
-    """企业生命周期查询参数"""
+class StNameQueryParams(QueryParams):
+    """是否为ST或退市股票"""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", []))
     start_date: str = Field(
@@ -27,8 +26,8 @@ class EnterpriseLifeCycleQueryParams(QueryParams):
     )
 
 
-class EnterpriseLifeCycleData(Data):
-    """企业生命周期数据"""
+class StNameData(Data):
+    """是否为ST或退市股票"""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
@@ -36,9 +35,6 @@ class EnterpriseLifeCycleData(Data):
     timestamp: Optional[dateType] = Field(
         description=DATA_DESCRIPTIONS.get("timestamp", "日期")
     )
-    报告期: Optional[dateType] = Field(
-        description=DATA_DESCRIPTIONS.get("报告期", "报告期")
-    )
-    企业生命周期: float = Field(
-        description=DATA_DESCRIPTIONS.get("企业生命周期", "企业生命周期")
+    是否为ST或退市股票: float = Field(
+        description=DATA_DESCRIPTIONS.get("是否为ST或退市股票", "是否为ST或退市股票")
     )
