@@ -15,12 +15,12 @@ from pydantic import Field
 class CalculateReductionPercentageQueryParams(QueryParams):
     """过去一年董监高合计减持比例"""
 
-    symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", []))
-    start_date: str = Field(
+    symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
+    start_date: Optional[dateType] = Field(
         default=None,
         description=QUERY_DESCRIPTIONS.get("start_date", ""),
     )
-    end_date: str = Field(
+    end_date: Optional[dateType] = Field(
         default=None,
         description=QUERY_DESCRIPTIONS.get("end_date", ""),
     )
@@ -30,13 +30,9 @@ class CalculateReductionPercentageData(Data):
     """过去一年董监高合计减持比例"""
 
     symbol: str = Field(
-        description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
+        default=None,
+        description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company."),
     )
     timestamp: Optional[dateType] = Field(
-        description=DATA_DESCRIPTIONS.get("timestamp", "日期")
-    )
-    过去一年董监高合计减持比例: float = Field(
-        description=DATA_DESCRIPTIONS.get(
-            "过去一年董监高合计减持比例", "过去一年董监高合计减持比例"
-        )
+        description=DATA_DESCRIPTIONS.get("timestamp", "The date.")
     )

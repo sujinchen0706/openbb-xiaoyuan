@@ -1,4 +1,4 @@
-"""财务TTM指标"""
+"""财务指标-盈利能力"""
 
 from datetime import date as dateType
 from typing import Optional
@@ -12,14 +12,14 @@ from openbb_core.provider.utils.descriptions import (
 from pydantic import Field
 
 
-class FinancialTTMIndicatorsQueryParams(QueryParams):
-    """财务TTM指标"""
+class FinanceProfitAbilityQueryParams(QueryParams):
+    """财务指标-盈利能力"""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
-class FinancialTTMIndicatorsData(Data):
-    """财务TTM指标"""
+class FinanceProfitAbilityData(Data):
+    """财务指标-盈利能力"""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")

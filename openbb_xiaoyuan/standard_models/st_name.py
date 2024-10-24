@@ -15,7 +15,7 @@ from pydantic import Field
 class StNameQueryParams(QueryParams):
     """是否为ST或退市股票"""
 
-    symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", []))
+    symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
     start_date: str = Field(
         default=None,
         description=QUERY_DESCRIPTIONS.get("start_date", ""),
@@ -33,8 +33,5 @@ class StNameData(Data):
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
     )
     timestamp: Optional[dateType] = Field(
-        description=DATA_DESCRIPTIONS.get("timestamp", "日期")
-    )
-    是否为ST或退市股票: float = Field(
-        description=DATA_DESCRIPTIONS.get("是否为ST或退市股票", "是否为ST或退市股票")
+        description=DATA_DESCRIPTIONS.get("timestamp", "The date.")
     )

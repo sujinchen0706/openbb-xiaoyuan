@@ -1,62 +1,86 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 
 import pandas as pd
-
 from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
+from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
+from openbb_core.provider.utils.errors import EmptyDataError
+from pydantic import Field
+
 from openbb_xiaoyuan.standard_models.enterprise_life_cycle import (
     EnterpriseLifeCycleQueryParams,
     EnterpriseLifeCycleData,
 )
-
-reader = get_jindata_reader()
-
-
-class XYEnterpriseLifeCycleQueryParams(EnterpriseLifeCycleQueryParams):
-    pass
-
-
-class XYEnterpriseLifeCycleData(EnterpriseLifeCycleData):
-    pass
+from openbb_xiaoyuan.utils.references import (
+    get_report_month,
+    groupByTime_sql,
+    get_1y_query_finance_sql,
+)
 
 
-class XYEnterpriseLifeCycleFetcher(
+class XiaoYuanEnterpriseLifeCycleQueryParams(EnterpriseLifeCycleQueryParams):
+    __json_schema_extra__ = {
+        "symbol": {"multiple_items_allowed": True},
+        "period": {
+            "choices": ["fy", "annual"],
+        },
+    }
+    period: Literal["fy", "annual"] = Field(
+        default="fy",
+        description=QUERY_DESCRIPTIONS.get("period", ""),
+    )
+
+    @classmethod
+    def to_upper(cls, v: str) -> str:
+        """Convert field to uppercase."""
+        return v.upper()
+
+
+class XiaoYuanEnterpriseLifeCycleData(EnterpriseLifeCycleData):
+    __alias_dict__ = {
+        "enterprise_life_cycle": "企业生命周期",
+        "period_ending": "报告期",
+    }
+
+
+class XiaoYuanEnterpriseLifeCycleFetcher(
     Fetcher[
-        XYEnterpriseLifeCycleQueryParams,
-        List[XYEnterpriseLifeCycleData],
+        XiaoYuanEnterpriseLifeCycleQueryParams,
+        List[XiaoYuanEnterpriseLifeCycleData],
     ]
 ):
     @staticmethod
-    def transform_query(params: Dict[str, Any]) -> XYEnterpriseLifeCycleQueryParams:
-        return XYEnterpriseLifeCycleQueryParams(**params)
+    def transform_query(
+        params: Dict[str, Any]
+    ) -> XiaoYuanEnterpriseLifeCycleQueryParams:
+        return XiaoYuanEnterpriseLifeCycleQueryParams(**params)
 
     @staticmethod
     def extract_data(
-        query: XYEnterpriseLifeCycleQueryParams,
+        query: XiaoYuanEnterpriseLifeCycleQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        factors = ["企业生命周期"]
+        reader = get_jindata_reader()
         symbols = query.symbol.split(",")
-        start_date = reader.convert_to_db_date_format(query.start_date)
-        end_date = reader.convert_to_db_date_format(query.end_date)
-        df = reader.get_finance_factors(
-            source="1Y",
-            frequency="1Y",
-            factor_names=[
-                "企业生命周期",
-            ],
-            start_date=start_date,
-            end_date=end_date,
-            symbols=symbols,
-        )
+        report_month = get_report_month(query.period)
 
+        finance_sql = get_1y_query_finance_sql(factors, symbols, report_month)
+        df = reader._run_query(
+            script=groupByTime_sql + finance_sql,
+        )
+        if df is None or df.empty:
+            raise EmptyDataError()
+        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
+        df = df.sort_values(by="报告期", ascending=False)
         data = df.to_dict(orient="records")
         return data
 
     @staticmethod
     def transform_data(
-        query: XYEnterpriseLifeCycleQueryParams, data: List[dict], **kwargs: Any
-    ) -> List[XYEnterpriseLifeCycleData]:
+        query: XiaoYuanEnterpriseLifeCycleQueryParams, data: List[dict], **kwargs: Any
+    ) -> List[XiaoYuanEnterpriseLifeCycleData]:
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XYEnterpriseLifeCycleData(**d) for d in data]
+        return [XiaoYuanEnterpriseLifeCycleData(**d) for d in data]

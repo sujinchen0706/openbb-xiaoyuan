@@ -10,27 +10,27 @@ from openbb_xiaoyuan.standard_models.st_name import StNameQueryParams, StNameDat
 reader = get_jindata_reader()
 
 
-class XYStNameQueryParams(StNameQueryParams):
+class XiaoYuanStNameQueryParams(StNameQueryParams):
     pass
 
 
-class XYStNameData(StNameData):
-    pass
+class XiaoYuanStNameData(StNameData):
+    __alias_dict__ = {"is_st": "是否为ST或退市股票"}
 
 
-class XYStNameFetcher(
+class XiaoYuanStNameFetcher(
     Fetcher[
-        XYStNameQueryParams,
-        List[XYStNameData],
+        XiaoYuanStNameQueryParams,
+        List[XiaoYuanStNameData],
     ]
 ):
     @staticmethod
-    def transform_query(params: Dict[str, Any]) -> XYStNameQueryParams:
-        return XYStNameQueryParams(**params)
+    def transform_query(params: Dict[str, Any]) -> XiaoYuanStNameQueryParams:
+        return XiaoYuanStNameQueryParams(**params)
 
     @staticmethod
     def extract_data(
-        query: XYStNameQueryParams,
+        query: XiaoYuanStNameQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
@@ -45,14 +45,14 @@ class XYStNameFetcher(
             end_date=end_date,
             symbols=symbols,
         )
-
+        df = df.sort_values(by="timestamp", ascending=False)
         data = df.to_dict(orient="records")
         return data
 
     @staticmethod
     def transform_data(
-        query: XYStNameQueryParams, data: List[dict], **kwargs: Any
-    ) -> List[XYStNameData]:
+        query: XiaoYuanStNameQueryParams, data: List[dict], **kwargs: Any
+    ) -> List[XiaoYuanStNameData]:
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XYStNameData(**d) for d in data]
+        return [XiaoYuanStNameData(**d) for d in data]
