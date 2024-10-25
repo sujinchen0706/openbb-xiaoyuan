@@ -10,8 +10,12 @@ from openbb_xiaoyuan.models.du_pont_analysis import XiaoYuanDuPontAnalysisFetche
 from openbb_xiaoyuan.models.enterprise_life_cycle import (
     XiaoYuanEnterpriseLifeCycleFetcher,
 )
+from openbb_xiaoyuan.models.equity_pledge import XiaoYuanEquityPledgeFetcher
 from openbb_xiaoyuan.models.finance_capital_structure import (
     XiaoYuanFinanceCapitalStructureFetcher,
+)
+from openbb_xiaoyuan.models.finance_cash_position import (
+    XiaoYuanFinanceCashpositionFetcher,
 )
 from openbb_xiaoyuan.models.finance_debt_paying_ability import (
     XiaoYuanFinanceDebtpayingAbilityFetcher,
@@ -25,7 +29,9 @@ from openbb_xiaoyuan.models.finance_operational_capability import (
 from openbb_xiaoyuan.models.finance_profit_ability import (
     XiaoYuanFinanceProfitAbilityFetcher,
 )
-
+from openbb_xiaoyuan.models.finance_revenue_quality import (
+    XiaoYuanFinanceRevenueQualityFetcher,
+)
 
 from openbb_xiaoyuan.models.financial_derivative_data import (
     XiaoYuanFinancialDerivativeFetcher,
@@ -64,5 +70,8 @@ provider = Provider(
         "XiaoYuanCashFlowStatement": XiaoYuanCashFlowStatementFetcher,
         "XiaoYuanFinanceOperationalCapability": XiaoYuanFinanceOperationalCapabilityFetcher,
         "XiaoYuanFinanceCapitalStructure": XiaoYuanFinanceCapitalStructureFetcher,
+        "XiaoYuanFinanceRevenueQuality": XiaoYuanFinanceRevenueQualityFetcher,
+        "XiaoYuanFinanceCashposition": XiaoYuanFinanceCashpositionFetcher,
+        "XiaoYuanEquityPledge": XiaoYuanEquityPledgeFetcher,
     },
 )

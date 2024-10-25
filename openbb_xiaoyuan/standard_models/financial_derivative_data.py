@@ -1,4 +1,4 @@
-"""企业生命周期"""
+"""Financial Derivative Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -13,13 +13,13 @@ from pydantic import Field
 
 
 class FinancialDerivativeQueryParams(QueryParams):
-    """财务衍生数据"""
+    """Financial Derivative Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
 class FinancialDerivativeData(Data):
-    """财务衍生数据"""
+    """Financial Derivative Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
@@ -28,4 +28,7 @@ class FinancialDerivativeData(Data):
         description=DATA_DESCRIPTIONS.get(
             "timestamp", "Reporting period publication time."
         )
+    )
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

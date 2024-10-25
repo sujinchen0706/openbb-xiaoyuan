@@ -1,3 +1,5 @@
+"""XiaoYuan Enterprise Life Cycle Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 
 import pandas as pd
@@ -19,6 +21,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanEnterpriseLifeCycleQueryParams(EnterpriseLifeCycleQueryParams):
+    """XiaoYuan Finance Enterprise Life Cycle Query."""
+
     __json_schema_extra__ = {
         "symbol": {"multiple_items_allowed": True},
         "period": {
@@ -37,6 +41,8 @@ class XiaoYuanEnterpriseLifeCycleQueryParams(EnterpriseLifeCycleQueryParams):
 
 
 class XiaoYuanEnterpriseLifeCycleData(EnterpriseLifeCycleData):
+    """XiaoYuan Finance Enterprise Life Cycle Data."""
+
     __alias_dict__ = {
         "enterprise_life_cycle": "企业生命周期",
         "period_ending": "报告期",
@@ -49,18 +55,23 @@ class XiaoYuanEnterpriseLifeCycleFetcher(
         List[XiaoYuanEnterpriseLifeCycleData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
+
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
     ) -> XiaoYuanEnterpriseLifeCycleQueryParams:
+        """Transform the query parameters."""
         return XiaoYuanEnterpriseLifeCycleQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanEnterpriseLifeCycleQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
         factors = ["企业生命周期"]
         reader = get_jindata_reader()
         symbols = query.symbol.split(",")
@@ -79,8 +90,12 @@ class XiaoYuanEnterpriseLifeCycleFetcher(
 
     @staticmethod
     def transform_data(
-        query: XiaoYuanEnterpriseLifeCycleQueryParams, data: List[dict], **kwargs: Any
+        # pylint: disable=unused-argument
+        query: XiaoYuanEnterpriseLifeCycleQueryParams,
+        data: List[dict],
+        **kwargs: Any,
     ) -> List[XiaoYuanEnterpriseLifeCycleData]:
+        """Transform the data."""
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanEnterpriseLifeCycleData(**d) for d in data]
+        return [XiaoYuanEnterpriseLifeCycleData.model_validate(d) for d in data]

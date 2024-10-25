@@ -1,3 +1,5 @@
+"""XiaoYuan DuPontAnalysis Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 
 from jinniuai_data_store.reader import get_jindata_reader
@@ -18,6 +20,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanDuPontAnalysisQueryParams(DuPontAnalysisQueryParams):
+    """XiaoYuan Finance DuPont Analysis Query."""
+
     __json_schema_extra__ = {
         "symbol": {"multiple_items_allowed": True},
         "period": {
@@ -36,7 +40,7 @@ class XiaoYuanDuPontAnalysisQueryParams(DuPontAnalysisQueryParams):
 
 
 class XiaoYuanDuPontAnalysisData(DuPontAnalysisData):
-    """权益乘数（杜邦分析）"""
+    """XiaoYuan Finance DuPont Analysis Data."""
 
     __alias_dict__ = {
         "du_pont_analysis": "权益乘数（杜邦分析）",
@@ -50,18 +54,21 @@ class XiaoYuanDuPontAnalysisFetcher(
         List[XiaoYuanDuPontAnalysisData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
+
     @staticmethod
     def transform_query(params: Dict[str, Any]) -> XiaoYuanDuPontAnalysisQueryParams:
-
+        """Transform the query parameters."""
         return XiaoYuanDuPontAnalysisQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanDuPontAnalysisQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
-
+        """Extract the data from the XiaoYuan Finance endpoints."""
         factors = ["权益乘数（杜邦分析）"]
         reader = get_jindata_reader()
         symbols = query.symbol.split(",")
@@ -80,6 +87,10 @@ class XiaoYuanDuPontAnalysisFetcher(
 
     @staticmethod
     def transform_data(
-        query: XiaoYuanDuPontAnalysisQueryParams, data: List[dict], **kwargs: Any
+        # pylint: disable=unused-argument
+        query: XiaoYuanDuPontAnalysisQueryParams,
+        data: List[dict],
+        **kwargs: Any,
     ) -> List[XiaoYuanDuPontAnalysisData]:
+        """Transform the data."""
         return [XiaoYuanDuPontAnalysisData.model_validate(d) for d in data]

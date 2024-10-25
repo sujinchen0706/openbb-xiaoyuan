@@ -13,6 +13,8 @@ from openbb_xiaoyuan.standard_models.calculate_reduction_percentage import (
 class XiaoYuanCalculateReductionPercentageQueryParams(
     CalculateReductionPercentageQueryParams
 ):
+    """XiaoYuan Calculate Reduction Percentage Query."""
+
     __json_schema_extra__ = {
         "symbol": {"multiple_items_allowed": True},
     }
@@ -24,6 +26,8 @@ class XiaoYuanCalculateReductionPercentageQueryParams(
 
 
 class XiaoYuanCalculateReductionPercentageData(CalculateReductionPercentageData):
+    """XiaoYuan Calculate Reduction Percentage Data."""
+
     __alias_dict__ = {"calculate_reduction_percentage": "过去一年董监高合计减持比例"}
 
 
@@ -33,10 +37,13 @@ class XiaoYuanCalculateReductionPercentageFetcher(
         List[XiaoYuanCalculateReductionPercentageData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan endpoints."""
+
     @staticmethod
     def transform_query(
-        params: Dict[str, Any],
+        params: Dict[str, Any]
     ) -> XiaoYuanCalculateReductionPercentageQueryParams:
+        """Transform the query parameters."""
         return XiaoYuanCalculateReductionPercentageQueryParams(**params)
 
     @staticmethod
@@ -45,6 +52,7 @@ class XiaoYuanCalculateReductionPercentageFetcher(
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract data from the data source."""
         reader = get_jindata_reader()
         symbols = query.symbol.split(",")
 
@@ -68,6 +76,9 @@ class XiaoYuanCalculateReductionPercentageFetcher(
         data: List[dict],
         **kwargs: Any,
     ) -> List[XiaoYuanCalculateReductionPercentageData]:
+        """Transform the raw data into structured data."""
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanCalculateReductionPercentageData(**d) for d in data]
+        return [
+            XiaoYuanCalculateReductionPercentageData.model_validate(d) for d in data
+        ]

@@ -1,4 +1,4 @@
-"""企业生命周期"""
+"""Enterprise Life Cycle Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -13,13 +13,13 @@ from pydantic import Field
 
 
 class EnterpriseLifeCycleQueryParams(QueryParams):
-    """企业生命周期查询参数"""
+    """Enterprise Life Cycle Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
 class EnterpriseLifeCycleData(Data):
-    """企业生命周期数据"""
+    """Enterprise Life Cycle Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
@@ -28,4 +28,7 @@ class EnterpriseLifeCycleData(Data):
         description=DATA_DESCRIPTIONS.get(
             "timestamp", "Reporting period publication time."
         )
+    )
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

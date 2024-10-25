@@ -1,13 +1,12 @@
-"""XiaoYuan 财务指标-每股 Statement Model."""
+"""XiaoYuan Finance Metrics Per Share Model."""
 
-import json
-import pandas as pd
-from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
+
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 from openbb_core.provider.utils.errors import EmptyDataError
-from pydantic import Field, field_validator
+from pydantic import Field
+
 from openbb_xiaoyuan.standard_models.financial_metrics_per_share import (
     PerShareIndicatorQueryParams,
     PerShareIndicatorData,
@@ -20,10 +19,7 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanPerShareIndicatorQueryParams(PerShareIndicatorQueryParams):
-    """小原 财务指标-每股 指标查询.
-
-    Source:
-    """
+    """XiaoYuan Per Share Indicator Query."""
 
     __json_schema_extra__ = {
         "period": {
@@ -36,9 +32,14 @@ class XiaoYuanPerShareIndicatorQueryParams(PerShareIndicatorQueryParams):
         description=QUERY_DESCRIPTIONS.get("period", ""),
     )
 
+    @classmethod
+    def to_upper(cls, v: str) -> str:
+        """Convert field to uppercase."""
+        return v.upper()
+
 
 class XiaoYuanPerShareIndicatorData(PerShareIndicatorData):
-    """Yahoo Finance Cash Flow Statement Data."""
+    """XiaoYuan Finance Cash Flow Statement Data."""
 
     __alias_dict__ = {
         "eps_diluted": "期末摊薄每股收益（元）",
@@ -62,14 +63,6 @@ class XiaoYuanPerShareIndicatorData(PerShareIndicatorData):
         "period_ending": "报告期",
     }
 
-    @field_validator("period_ending", mode="before", check_fields=False)
-    @classmethod
-    def date_validate(cls, v):  # pylint: disable=E0213
-        """Return datetime object from string."""
-        if isinstance(v, str):
-            return datetime.strptime(v, "%Y-%m-%d %H:%M:%S").date()
-        return v
-
 
 class XiaoYuanPerShareIndicatorFetcher(
     Fetcher[
@@ -77,7 +70,7 @@ class XiaoYuanPerShareIndicatorFetcher(
         List[XiaoYuanPerShareIndicatorData],
     ]
 ):
-    """转换查询，提取并转换来自小原的数据。"""
+    """Extract the data from the XiaoYuan Finance endpoints."""
 
     @staticmethod
     def transform_query(params: Dict[str, Any]) -> XiaoYuanPerShareIndicatorQueryParams:
@@ -91,7 +84,7 @@ class XiaoYuanPerShareIndicatorFetcher(
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[PerShareIndicatorData]:
-        """Extract the data from the Yahoo Finance endpoints."""
+        """Extract the data from the XiaoYuan Finance endpoints."""
         from jinniuai_data_store.reader import get_jindata_reader
 
         reader = get_jindata_reader()
@@ -124,13 +117,9 @@ class XiaoYuanPerShareIndicatorFetcher(
         )
         if df is None or df.empty:
             raise EmptyDataError()
-        df.set_index("factor_name", inplace=True, drop=True)
-        df.columns = pd.to_datetime(df.columns)
-        data = df[sorted(df.columns, reverse=True)]
-        data = data.fillna("N/A").replace("N/A", None).to_dict()
-        data = [{"period_ending": str(key), **value} for key, value in data.items()]
-
-        data = json.loads(json.dumps(data))
+        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
+        df = df.sort_values(by="报告期", ascending=False)
+        data = df.to_dict(orient="records")
 
         return data
 

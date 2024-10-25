@@ -1,4 +1,4 @@
-"""财务指标-盈利能力"""
+"""Finance Operational Capability Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -13,13 +13,13 @@ from pydantic import Field
 
 
 class FinanceOperationalCapabilityQueryParams(QueryParams):
-    """财务指标-盈利能力"""
+    """Finance Operational Capability Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
 class FinanceOperationalCapabilityData(Data):
-    """财务指标-盈利能力"""
+    """Finance Operational Capability Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
@@ -28,4 +28,7 @@ class FinanceOperationalCapabilityData(Data):
         description=DATA_DESCRIPTIONS.get(
             "timestamp", "Reporting period publication time."
         )
+    )
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

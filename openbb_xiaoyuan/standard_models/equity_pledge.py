@@ -1,4 +1,4 @@
-"""Finance Profit Ability Standard Model."""
+"""Equity Pledge Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -12,23 +12,26 @@ from openbb_core.provider.utils.descriptions import (
 from pydantic import Field
 
 
-class FinanceProfitAbilityQueryParams(QueryParams):
-    """Finance Profit Ability Query."""
+class EquityPledgeQueryParams(QueryParams):
+    """Equity Pledge Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
+    start_date: Optional[dateType] = Field(
+        default=None,
+        description=QUERY_DESCRIPTIONS.get("start_date", ""),
+    )
+    end_date: Optional[dateType] = Field(
+        default=None,
+        description=QUERY_DESCRIPTIONS.get("end_date", ""),
+    )
 
 
-class FinanceProfitAbilityData(Data):
-    """Finance Profit Ability Data."""
+class EquityPledgeData(Data):
+    """Equity Pledge Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
     )
     timestamp: Optional[dateType] = Field(
-        description=DATA_DESCRIPTIONS.get(
-            "timestamp", "Reporting period publication time."
-        )
-    )
-    period_ending: Optional[dateType] = Field(
-        description="The end date of the reporting period."
+        description=DATA_DESCRIPTIONS.get("timestamp", "The date.")
     )

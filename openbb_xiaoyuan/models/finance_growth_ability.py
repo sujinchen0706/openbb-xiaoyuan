@@ -1,3 +1,5 @@
+"""XiaoYuan Finance Growth Ability Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 
 import pandas as pd
@@ -19,6 +21,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanFinanceGrowthAbilityQueryParams(FinanceGrowthAbilityQueryParams):
+    """XiaoYuan Finance Growth Ability Query."""
+
     __json_schema_extra__ = {
         "period": {
             "choices": ["fy", "q1", "q2ytd", "q3ytd", "annual"],
@@ -37,6 +41,8 @@ class XiaoYuanFinanceGrowthAbilityQueryParams(FinanceGrowthAbilityQueryParams):
 
 
 class XiaoYuanFinanceGrowthAbilityData(FinanceGrowthAbilityData):
+    """XiaoYuan Finance Growth Ability Data."""
+
     __alias_dict__ = {
         "total_asset_yoy_growth_rate_percent": "总资产同比增长率（百分比）",
         "total_revenue_yoy_growth_rate_percent": "营业总收入同比增长率（百分比）",
@@ -66,18 +72,23 @@ class XiaoYuanFinanceGrowthAbilityFetcher(
         List[XiaoYuanFinanceGrowthAbilityData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
+
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
     ) -> XiaoYuanFinanceGrowthAbilityQueryParams:
+        """Transform the query parameters."""
         return XiaoYuanFinanceGrowthAbilityQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinanceGrowthAbilityQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
         factors = [
             "总资产同比增长率（百分比）",
             "营业总收入同比增长率（百分比）",
@@ -115,8 +126,12 @@ class XiaoYuanFinanceGrowthAbilityFetcher(
 
     @staticmethod
     def transform_data(
-        query: XiaoYuanFinanceGrowthAbilityQueryParams, data: List[dict], **kwargs: Any
+        # pylint: disable=unused-argument
+        query: XiaoYuanFinanceGrowthAbilityQueryParams,
+        data: List[dict],
+        **kwargs: Any,
     ) -> List[XiaoYuanFinanceGrowthAbilityData]:
+        """Transform the data."""
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanFinanceGrowthAbilityData(**d) for d in data]
+        return [XiaoYuanFinanceGrowthAbilityData.model_validate(d) for d in data]

@@ -1,4 +1,4 @@
-"""Finance Profit Ability Standard Model."""
+"""Finance Capital Structure Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -12,14 +12,14 @@ from openbb_core.provider.utils.descriptions import (
 from pydantic import Field
 
 
-class FinanceProfitAbilityQueryParams(QueryParams):
-    """Finance Profit Ability Query."""
+class FinanceCapitalStructureQueryParams(QueryParams):
+    """Finance Capital Structure Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
-class FinanceProfitAbilityData(Data):
-    """Finance Profit Ability Data."""
+class FinanceCapitalStructureData(Data):
+    """Finance Capital Structure Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")

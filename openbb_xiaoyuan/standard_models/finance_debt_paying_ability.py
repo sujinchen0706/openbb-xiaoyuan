@@ -1,4 +1,4 @@
-"""财务指标-盈利能力"""
+"""Finance Indicator - Debt-Paying Ability Standard Model."""
 
 from typing import Optional
 from datetime import date as dateType
@@ -12,13 +12,13 @@ from pydantic import Field
 
 
 class FinanceDebtpayingAbilityQueryParams(QueryParams):
-    """财务指标-偿债能力"""
+    """Finance Indicator - Debt-Paying Ability Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
 class FinanceDebtpayingAbilityData(Data):
-    """财务指标-偿债能力"""
+    """Finance Indicator - Debt-Paying Ability Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
@@ -27,4 +27,7 @@ class FinanceDebtpayingAbilityData(Data):
         description=DATA_DESCRIPTIONS.get(
             "timestamp", "Reporting period publication time."
         )
+    )
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

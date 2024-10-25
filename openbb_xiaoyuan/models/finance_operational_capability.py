@@ -1,4 +1,4 @@
-"""Yahoo Finance Cash Flow Statement Model."""
+"""XiaoYuan Operational Capability Model."""
 
 from typing import Any, Dict, List, Literal, Optional
 
@@ -36,7 +36,7 @@ class XiaoYuanFinanceOperationalCapabilityQueryParams(
 
 
 class XiaoYuanFinanceOperationalCapabilityData(FinanceOperationalCapabilityData):
-    """Yahoo Finance Cash Flow Statement Data."""
+    """XiaoYuan Finance Operational Capability Data."""
 
     __alias_dict__ = {
         "fixed_asset_turnover_ratio": "固定资产周转率",
@@ -69,7 +69,7 @@ class XiaoYuanFinanceOperationalCapabilityFetcher(
         List[XiaoYuanFinanceOperationalCapabilityData],
     ]
 ):
-    """Transform the query, extract and transform the data from the Yahoo Finance endpoints."""
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
 
     @staticmethod
     def transform_query(

@@ -1,3 +1,5 @@
+"""XiaoYuan Financial TTM Indicators Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 from pydantic import Field
@@ -20,6 +22,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanFinancialTTMIndicatorsQueryParams(FinancialTTMIndicatorsQueryParams):
+    """XiaoYuan Financial TTM Indicators Query."""
+
     __json_schema_extra__ = {
         "symbol": {"multiple_items_allowed": True},
         "period": {
@@ -38,6 +42,8 @@ class XiaoYuanFinancialTTMIndicatorsQueryParams(FinancialTTMIndicatorsQueryParam
 
 
 class XiaoYuanFinancialTTMIndicatorsData(FinancialTTMIndicatorsData):
+    """XiaoYuan Financial TTM Indicators Data."""
+
     __alias_dict__ = {
         "total_revenue_ttm": "营业总收入TTM",
         "total_cost_ttm": "营业总成本TTM",
@@ -67,18 +73,25 @@ class XiaoYuanFinancialTTMIndicatorsFetcher(
         List[XiaoYuanFinancialTTMIndicatorsData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
+
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
     ) -> XiaoYuanFinancialTTMIndicatorsQueryParams:
+        """Transform the query parameters."""
+
         return XiaoYuanFinancialTTMIndicatorsQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinancialTTMIndicatorsQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
+
         factors = [
             "营业总收入TTM",
             "营业总成本TTM",
@@ -116,10 +129,13 @@ class XiaoYuanFinancialTTMIndicatorsFetcher(
 
     @staticmethod
     def transform_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinancialTTMIndicatorsQueryParams,
         data: List[dict],
         **kwargs: Any,
     ) -> List[XiaoYuanFinancialTTMIndicatorsData]:
+        """Transform the data."""
+
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanFinancialTTMIndicatorsData(**d) for d in data]
+        return [XiaoYuanFinancialTTMIndicatorsData.model_validate(d) for d in data]

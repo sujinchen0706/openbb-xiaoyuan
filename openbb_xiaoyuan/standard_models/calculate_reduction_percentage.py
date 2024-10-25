@@ -1,4 +1,4 @@
-"""过去一年董监高合计减持比例"""
+"""Calculate Reduction Percentage Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -13,7 +13,7 @@ from pydantic import Field
 
 
 class CalculateReductionPercentageQueryParams(QueryParams):
-    """过去一年董监高合计减持比例"""
+    """Total reduction percentage of directors and senior executives over the past yea"""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
     start_date: Optional[dateType] = Field(
@@ -27,7 +27,7 @@ class CalculateReductionPercentageQueryParams(QueryParams):
 
 
 class CalculateReductionPercentageData(Data):
-    """过去一年董监高合计减持比例"""
+    """Total reduction percentage of directors and senior executives over the past yea"""
 
     symbol: str = Field(
         default=None,

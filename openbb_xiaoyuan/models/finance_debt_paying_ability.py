@@ -1,3 +1,5 @@
+"""XiaoYuan Finance Debt Paying Ability Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 
 import pandas as pd
@@ -19,6 +21,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanFinanceDebtpayingAbilityQueryParams(FinanceDebtpayingAbilityQueryParams):
+    """XiaoYuan Finance Debt Paying Ability Query."""
+
     __json_schema_extra__ = {
         "symbol": {"multiple_items_allowed": True},
         "period": {
@@ -37,6 +41,8 @@ class XiaoYuanFinanceDebtpayingAbilityQueryParams(FinanceDebtpayingAbilityQueryP
 
 
 class XiaoYuanFinanceDebtpayingAbilityData(FinanceDebtpayingAbilityData):
+    """XiaoYuan Finance Debt Paying Ability Data."""
+
     __alias_dict__ = {
         "debt_to_asset_ratio": "资产负债率",
         "conservative_quick_ratio": "保守速动比率",
@@ -62,18 +68,23 @@ class XiaoYuanFinanceDebtpayingAbilityFetcher(
         List[XiaoYuanFinanceDebtpayingAbilityData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
+
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
     ) -> XiaoYuanFinanceDebtpayingAbilityQueryParams:
+        """Transform the query parameters."""
         return XiaoYuanFinanceDebtpayingAbilityQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinanceDebtpayingAbilityQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
         factors = [
             "资产负债率",
             "保守速动比率",
@@ -107,10 +118,12 @@ class XiaoYuanFinanceDebtpayingAbilityFetcher(
 
     @staticmethod
     def transform_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinanceDebtpayingAbilityQueryParams,
         data: List[dict],
         **kwargs: Any,
     ) -> List[XiaoYuanFinanceDebtpayingAbilityData]:
+        """Transform the data ."""
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanFinanceDebtpayingAbilityData(**d) for d in data]
+        return [XiaoYuanFinanceDebtpayingAbilityData.model_validate(d) for d in data]

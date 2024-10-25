@@ -1,4 +1,4 @@
-"""企业生命周期"""
+"""DuPont Analysis Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -13,13 +13,13 @@ from pydantic import Field
 
 
 class DuPontAnalysisQueryParams(QueryParams):
-    """权益乘数（杜邦分析）"""
+    """Equity Multiplier (DuPont Analysis) Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
 class DuPontAnalysisData(Data):
-    """权益乘数（杜邦分析）"""
+    """Equity Multiplier (DuPont Analysis) Data."""
 
     symbol: str = Field(
         default=None,
@@ -29,4 +29,7 @@ class DuPontAnalysisData(Data):
         description=DATA_DESCRIPTIONS.get(
             "timestamp", "Reporting period publication time."
         )
+    )
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

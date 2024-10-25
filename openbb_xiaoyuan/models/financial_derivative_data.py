@@ -1,3 +1,5 @@
+"""XiaoYuan Financial Derivative Data Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 from pydantic import Field
@@ -20,6 +22,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanFinancialDerivativeQueryParams(FinancialDerivativeQueryParams):
+    """XiaoYuan Financial Derivative Query."""
+
     __json_schema_extra__ = {
         "period": {
             "choices": ["fy", "q1", "q2ytd", "q3ytd", "annual"],
@@ -38,6 +42,8 @@ class XiaoYuanFinancialDerivativeQueryParams(FinancialDerivativeQueryParams):
 
 
 class XiaoYuanFinancialDerivativeData(FinancialDerivativeData):
+    """XiaoYuan Finance Cash Flow Statement Data."""
+
     __alias_dict__ = {
         "non_interest_bearing_current_liabilities": "无息流动负债",
         "non_interest_bearing_non_current_liabilities": "无息非流动负债",
@@ -67,18 +73,25 @@ class XiaoYuanFinancialDerivativeFetcher(
         List[XiaoYuanFinancialDerivativeData],
     ]
 ):
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
+
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
     ) -> XiaoYuanFinancialDerivativeQueryParams:
+        """Transform the query parameters."""
+
         return XiaoYuanFinancialDerivativeQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinancialDerivativeQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
+
         factors = [
             "无息流动负债",
             "无息非流动负债",
@@ -116,8 +129,13 @@ class XiaoYuanFinancialDerivativeFetcher(
 
     @staticmethod
     def transform_data(
-        query: XiaoYuanFinancialDerivativeQueryParams, data: List[dict], **kwargs: Any
+        # pylint: disable=unused-argument
+        query: XiaoYuanFinancialDerivativeQueryParams,
+        data: List[dict],
+        **kwargs: Any,
     ) -> List[XiaoYuanFinancialDerivativeData]:
+        """Transform the data."""
+
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanFinancialDerivativeData(**d) for d in data]
+        return [XiaoYuanFinancialDerivativeData.model_validate(d) for d in data]

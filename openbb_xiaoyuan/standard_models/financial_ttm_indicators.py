@@ -1,4 +1,4 @@
-"""财务TTM指标"""
+"""Financial TTM Indicators Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -13,13 +13,13 @@ from pydantic import Field
 
 
 class FinancialTTMIndicatorsQueryParams(QueryParams):
-    """财务TTM指标"""
+    """Financial TTM Indicators Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
 class FinancialTTMIndicatorsData(Data):
-    """财务TTM指标"""
+    """Financial TTM Indicators Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
@@ -28,4 +28,7 @@ class FinancialTTMIndicatorsData(Data):
         description=DATA_DESCRIPTIONS.get(
             "timestamp", "Reporting period publication time."
         )
+    )
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

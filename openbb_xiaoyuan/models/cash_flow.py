@@ -1,4 +1,4 @@
-"""Yahoo Finance Cash Flow Statement Model."""
+"""XiaoYuan Finance Cash Flow Statement Model."""
 
 from typing import Any, Dict, List, Literal, Optional
 
@@ -20,6 +20,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanCashFlowStatementQueryParams(CashFlowStatementQueryParams):
+    """XiaoYuan Finance Cash Flow Statement Query."""
+
     __json_schema_extra__ = {
         "period": {
             "choices": ["fy", "q1", "q2ytd", "q3ytd", "annual"],
@@ -34,7 +36,7 @@ class XiaoYuanCashFlowStatementQueryParams(CashFlowStatementQueryParams):
 
 
 class XiaoYuanCashFlowStatementData(CashFlowStatementData):
-    """Yahoo Finance Cash Flow Statement Data."""
+    """XiaoYuan Finance Cash Flow Statement Data."""
 
     __alias_dict__ = {
         "sales_of_goods_and_provision_of_labour_received_cash": "销售商品提供劳务收到的现金",
@@ -136,7 +138,7 @@ class XiaoYuanCashFlowStatementFetcher(
         List[XiaoYuanCashFlowStatementData],
     ]
 ):
-    """Transform the query, extract and transform the data from the Yahoo Finance endpoints."""
+    """Transform the query, extract and transform the data from the XiaoYuan Finance endpoints."""
 
     @staticmethod
     def transform_query(params: Dict[str, Any]) -> XiaoYuanCashFlowStatementQueryParams:
@@ -150,6 +152,7 @@ class XiaoYuanCashFlowStatementFetcher(
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[XiaoYuanCashFlowStatementData]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
         factors = [
             "销售商品提供劳务收到的现金",
             "收到的税费返还",

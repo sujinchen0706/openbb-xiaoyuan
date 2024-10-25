@@ -1,3 +1,5 @@
+"""XiaoYuan Finance Profitability Model."""
+
 from typing import Any, Dict, List, Optional, Literal
 
 import pandas as pd
@@ -20,6 +22,8 @@ from openbb_xiaoyuan.utils.references import (
 
 
 class XiaoYuanFinanceProfitAbilityQueryParams(FinanceProfitAbilityQueryParams):
+    """XiaoYuan Finance Profitability Query."""
+
     __json_schema_extra__ = {
         "period": {
             "choices": ["fy", "q1", "q2ytd", "q3ytd", "annual"],
@@ -38,6 +42,8 @@ class XiaoYuanFinanceProfitAbilityQueryParams(FinanceProfitAbilityQueryParams):
 
 
 class XiaoYuanFinanceProfitAbilityData(FinanceProfitAbilityData):
+    """XiaoYuan Finance Profitability Data."""
+
     __alias_dict__ = {
         "roe_diluted_percent": "净资产收益率ROE（摊薄）（百分比）",
         "roe_average_percent": "净资产收益率ROE（平均）（百分比）",
@@ -79,18 +85,23 @@ class XiaoYuanFinanceProfitAbilityFetcher(
         List[XiaoYuanFinanceProfitAbilityData],
     ]
 ):
+    """"""
+
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
     ) -> XiaoYuanFinanceProfitAbilityQueryParams:
+        """Transform the query parameters."""
         return XiaoYuanFinanceProfitAbilityQueryParams(**params)
 
     @staticmethod
     def extract_data(
+        # pylint: disable=unused-argument
         query: XiaoYuanFinanceProfitAbilityQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
+        """Extract the data from the XiaoYuan Finance endpoints."""
         factors = [
             "净资产收益率ROE（摊薄）（百分比）",
             "净资产收益率ROE（平均）（百分比）",
@@ -140,8 +151,12 @@ class XiaoYuanFinanceProfitAbilityFetcher(
 
     @staticmethod
     def transform_data(
-        query: XiaoYuanFinanceProfitAbilityQueryParams, data: List[dict], **kwargs: Any
+        # pylint: disable=unused-argument
+        query: XiaoYuanFinanceProfitAbilityQueryParams,
+        data: List[dict],
+        **kwargs: Any,
     ) -> List[XiaoYuanFinanceProfitAbilityData]:
+        """Transform the data."""
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [XiaoYuanFinanceProfitAbilityData(**d) for d in data]
+        return [XiaoYuanFinanceProfitAbilityData.model_validate(d) for d in data]
