@@ -47,8 +47,8 @@ from openbb_xiaoyuan.models.financial_metrics_per_share import (
 # mypy: disable-error-code="list-item"
 
 
-provider = Provider(
-    name="openbb_xiaoyuan",
+openbb_xiaoyuan_provider = Provider(
+    name="xiaoyuan",
     description="Data provider for openbb-xiaoyuan.",
     # Only add 'credentials' if they are needed.
     # For multiple login details, list them all here.

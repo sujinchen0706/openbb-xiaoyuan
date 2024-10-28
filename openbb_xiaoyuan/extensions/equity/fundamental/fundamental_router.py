@@ -16,7 +16,7 @@ router = Router(prefix="/fundamental")
 
 
 @router.command(
-    model="XiaoYuanEnterpriseLifeCycle",
+    model="EnterpriseLifeCycle",
     examples=[
         APIEx(
             parameters={
@@ -37,7 +37,7 @@ async def enterprise_life_cycle(
 
 
 @router.command(
-    model="XiaoYuanCalculateReductionPercentage",
+    model="CalculateReductionPercentage",
     examples=[
         APIEx(
             parameters={
@@ -59,7 +59,7 @@ async def calculate_reduction_percentage(
 
 
 @router.command(
-    model="XiaoYuanStName",
+    model="StName",
     examples=[
         APIEx(
             parameters={
@@ -81,7 +81,7 @@ async def st_name(
 
 
 @router.command(
-    model="XiaoYuanDuPontAnalysis",
+    model="DuPontAnalysis",
     examples=[
         APIEx(
             parameters={
@@ -102,7 +102,7 @@ async def du_pont_analysis(
 
 
 @router.command(
-    model="XiaoYuanFinancialDerivative",
+    model="FinancialDerivative",
     examples=[
         APIEx(
             parameters={
@@ -123,7 +123,7 @@ async def financial_derivative_data(
 
 
 @router.command(
-    model="XiaoYuanFinancialTTMIndicators",
+    model="FinancialTTMIndicators",
     examples=[
         APIEx(
             parameters={
@@ -144,7 +144,7 @@ async def financial_ttm_indicators(
 
 
 @router.command(
-    model="XiaoYuanPerShareIndicatorFetcher",
+    model="PerShareIndicatorFetcher",
     examples=[
         APIEx(
             parameters={
@@ -165,7 +165,7 @@ async def per_share_indicator(
 
 
 @router.command(
-    model="XiaoYuanFinanceProfitAbility",
+    model="FinanceProfitAbility",
     examples=[
         APIEx(
             parameters={
@@ -186,7 +186,7 @@ async def finance_profit_ability(
 
 
 @router.command(
-    model="XiaoYuanFinanceGrowthAbility",
+    model="FinanceGrowthAbility",
     examples=[
         APIEx(
             parameters={
@@ -207,7 +207,7 @@ async def finance_growth_ability(
 
 
 @router.command(
-    model="XiaoYuanFinanceDebtpayingAbility",
+    model="FinanceDebtpayingAbility",
     examples=[
         APIEx(
             parameters={
@@ -249,7 +249,7 @@ async def cash(
 
 
 @router.command(
-    model="XiaoYuanFinanceOperationalCapability",
+    model="FinanceOperationalCapability",
     examples=[
         APIEx(
             parameters={
@@ -270,7 +270,7 @@ async def finance_operational_capability(
 
 
 @router.command(
-    model="XiaoYuanFinanceCapitalStructure",
+    model="FinanceCapitalStructure",
     examples=[
         APIEx(
             parameters={
@@ -291,7 +291,7 @@ async def finance_capital_structure(
 
 
 @router.command(
-    model="XiaoYuanFinanceRevenueQuality",
+    model="FinanceRevenueQuality",
     examples=[
         APIEx(
             parameters={
@@ -312,7 +312,7 @@ async def finance_revenue_quality(
 
 
 @router.command(
-    model="XiaoYuanFinanceCashposition",
+    model="FinanceCashposition",
     examples=[
         APIEx(
             parameters={
@@ -333,7 +333,7 @@ async def finance_cash_position(
 
 
 @router.command(
-    model="XiaoYuanEquityPledge",
+    model="EquityPledge",
     examples=[
         APIEx(
             parameters={

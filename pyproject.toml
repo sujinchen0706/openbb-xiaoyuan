@@ -31,7 +31,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.plugins."openbb_core_extension"]
-openbb_xiaoyuan = "openbb_xiaoyuan.router:router"
+equity = "openbb_xiaoyuan.router:equity_router"
 
 [tool.poetry.plugins."openbb_provider_extension"]
-openbb_xiaoyuan = "openbb_xiaoyuan.provider:provider"
+openbb = "openbb_xiaoyuan.provider:openbb_xiaoyuan_provider"
