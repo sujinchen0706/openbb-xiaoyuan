@@ -228,7 +228,7 @@ async def finance_debt_paying_ability(
 
 
 @router.command(
-    model="XiaoYuanCashFlowStatement",
+    model="CashFlowStatement",
     examples=[
         APIEx(
             parameters={

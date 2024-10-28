@@ -67,7 +67,7 @@ provider = Provider(
         "XiaoYuanFinanceProfitAbility": XiaoYuanFinanceProfitAbilityFetcher,
         "XiaoYuanFinanceDebtpayingAbility": XiaoYuanFinanceDebtpayingAbilityFetcher,
         "XiaoYuanFinanceGrowthAbility": XiaoYuanFinanceGrowthAbilityFetcher,
-        "XiaoYuanCashFlowStatement": XiaoYuanCashFlowStatementFetcher,
+        "CashFlowStatement": XiaoYuanCashFlowStatementFetcher,
         "XiaoYuanFinanceOperationalCapability": XiaoYuanFinanceOperationalCapabilityFetcher,
         "XiaoYuanFinanceCapitalStructure": XiaoYuanFinanceCapitalStructureFetcher,
         "XiaoYuanFinanceRevenueQuality": XiaoYuanFinanceRevenueQualityFetcher,

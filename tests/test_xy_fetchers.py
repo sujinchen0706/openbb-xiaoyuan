@@ -44,7 +44,7 @@ test_credentials = UserService().default_user_settings.credentials.model_dump(
 
 
 @pytest.mark.record_http
-def test_xy_enterprise_life_cycle_fetcher(credentials=test_credentials):
+def test_xiaoyuan_enterprise_life_cycle_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,APPL",
         "period": "annual",
@@ -56,7 +56,7 @@ def test_xy_enterprise_life_cycle_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_calculate_reduction_percentage_fetcher(credentials=test_credentials):
+def test_xiaoyuan_calculate_reduction_percentage_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519",
         "start_date": date(2021, 1, 1),
@@ -69,7 +69,7 @@ def test_xy_calculate_reduction_percentage_fetcher(credentials=test_credentials)
 
 
 @pytest.mark.record_http
-def test_xy_du_pont_analysis_fetcher(credentials=test_credentials):
+def test_xiaoyuan_du_pont_analysis_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415",
         "period": "annual",
@@ -81,7 +81,7 @@ def test_xy_du_pont_analysis_fetcher(credentials=test_credentials):
 
 
 # @pytest.mark.record_http
-def test_xy_st_name_fetcher(credentials=test_credentials):
+def test_xiaoyuan_st_name_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "start_date": date(2021, 1, 1),
@@ -94,7 +94,7 @@ def test_xy_st_name_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_financial_derivative_fetcher(credentials=test_credentials):
+def test_xiaoyuan_financial_derivative_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -106,7 +106,7 @@ def test_xy_financial_derivative_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_financial_ttm_indicators_fetcher(credentials=test_credentials):
+def test_xiaoyuan_financial_ttm_indicators_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -118,7 +118,7 @@ def test_xy_financial_ttm_indicators_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_finance_profit_ability_fetcher(credentials=test_credentials):
+def test_xiaoyuan_finance_profit_ability_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -130,7 +130,7 @@ def test_xy_finance_profit_ability_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_cash_flow_fetcher(credentials=test_credentials):
+def test_xiaoyuan_cash_flow_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -142,7 +142,7 @@ def test_xy_cash_flow_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_finance_operational_capability_fetcher(credentials=test_credentials):
+def test_xiaoyuan_finance_operational_capability_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -153,7 +153,7 @@ def test_xy_finance_operational_capability_fetcher(credentials=test_credentials)
 
 
 @pytest.mark.record_http
-def test_xy_finance_capital_structure_fetcher(credentials=test_credentials):
+def test_xiaoyuan_finance_capital_structure_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -164,7 +164,7 @@ def test_xy_finance_capital_structure_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_finance_revenue_quality_fetcher(credentials=test_credentials):
+def test_xiaoyuan_finance_revenue_quality_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -175,7 +175,7 @@ def test_xy_finance_revenue_quality_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_finance_cash_position_fetcher(credentials=test_credentials):
+def test_xiaoyuan_finance_cash_position_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "period": "annual",
@@ -186,7 +186,7 @@ def test_xy_finance_cash_position_fetcher(credentials=test_credentials):
 
 
 @pytest.mark.record_http
-def test_xy_equity_pledge_fetcher(credentials=test_credentials):
+def test_xiaoyuan_equity_pledge_fetcher(credentials=test_credentials):
     params = {
         "symbol": "SH600519,SZ002415,AAPL",
         "start_date": date(2021, 1, 1),
@@ -197,7 +197,7 @@ def test_xy_equity_pledge_fetcher(credentials=test_credentials):
     assert result is None
 
 
-# @pytest.mark.record_http
+@pytest.mark.record_http
 def test_xiaoyuan_per_share_indicator_fetcher(credentials=test_credentials):
     """Test XiaoYuanPerShareIndicatorFetcher."""
     # ["fy", "q1", "q2ytd", "q3ytd", "annual"]
