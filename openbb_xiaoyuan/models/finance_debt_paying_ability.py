@@ -16,7 +16,7 @@ from openbb_xiaoyuan.standard_models.finance_debt_paying_ability import (
 from openbb_xiaoyuan.utils.references import (
     get_report_month,
     get_query_finance_sql,
-    groupByTime_sql,
+    extractMonthDayFromTime,
 )
 
 
@@ -107,7 +107,7 @@ class XiaoYuanFinanceDebtpayingAbilityFetcher(
 
         finance_sql = get_query_finance_sql(factors, symbols, report_month)
         df = reader._run_query(
-            script=groupByTime_sql + finance_sql,
+            script=extractMonthDayFromTime + finance_sql,
         )
         if df is None or df.empty:
             raise EmptyDataError()

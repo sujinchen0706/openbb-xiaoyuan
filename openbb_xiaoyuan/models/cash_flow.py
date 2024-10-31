@@ -15,7 +15,7 @@ from pydantic import Field, model_validator
 from openbb_xiaoyuan.utils.references import (
     get_report_month,
     get_query_finance_sql,
-    groupByTime_sql,
+    extractMonthDayFromTime,
 )
 
 
@@ -24,11 +24,11 @@ class XiaoYuanCashFlowStatementQueryParams(CashFlowStatementQueryParams):
 
     __json_schema_extra__ = {
         "period": {
-            "choices": ["fy", "q1", "q2ytd", "q3ytd", "annual"],
+            "choices": ["fy", "ytd", "annual"],
         }
     }
 
-    period: Literal["fy", "q1", "q2ytd", "q3ytd", "annual"] = Field(
+    period: Literal["fy", "ytd", "annual"] = Field(
         default="fy",
         description=QUERY_DESCRIPTIONS.get("period", ""),
     )
@@ -240,7 +240,7 @@ class XiaoYuanCashFlowStatementFetcher(
 
         finance_sql = get_query_finance_sql(factors, symbols, report_month)
         df = reader._run_query(
-            script=groupByTime_sql + finance_sql,
+            script=extractMonthDayFromTime + finance_sql,
         )
         if df is None or df.empty:
             raise EmptyDataError()

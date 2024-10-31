@@ -12,7 +12,7 @@ from openbb_xiaoyuan.standard_models.financial_metrics_per_share import (
     PerShareIndicatorData,
 )
 from openbb_xiaoyuan.utils.references import (
-    groupByTime_sql,
+    extractMonthDayFromTime,
     get_query_finance_sql,
     get_report_month,
 )
@@ -42,6 +42,7 @@ class XiaoYuanPerShareIndicatorData(PerShareIndicatorData):
     """XiaoYuan Finance Cash Flow Statement Data."""
 
     __alias_dict__ = {
+        "period_ending": "报告期",
         "eps_diluted": "期末摊薄每股收益（元）",
         "eps_excl_extraordinary": "扣非每股收益（元）",
         "eps_ttm": "每股收益EPSTTM（元）",
@@ -60,7 +61,6 @@ class XiaoYuanPerShareIndicatorData(PerShareIndicatorData):
         "ncf_p_share_ttm": "每股现金流量净额TTM（元）",
         "fcf_to_firm_per_share": "每股企业自由现金流量（元）",
         "fcf_to_equity_per_share": "每股股东自由现金流量（元）",
-        "period_ending": "报告期",
     }
 
 
@@ -113,7 +113,7 @@ class XiaoYuanPerShareIndicatorFetcher(
             FIN_METRICS_PER_SHARE, [query.symbol], report_month
         )
         df = reader._run_query(
-            script=groupByTime_sql + finance_sql,
+            script=extractMonthDayFromTime + finance_sql,
         )
         if df is None or df.empty:
             raise EmptyDataError()
