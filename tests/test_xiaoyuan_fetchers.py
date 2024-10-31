@@ -2,6 +2,10 @@
 
 import pytest
 from openbb_core.app.service.user_service import UserService
+
+from openbb_xiaoyuan.models.cash_flow_growth import (
+    XiaoYuanCashFlowStatementGrowthFetcher,
+)
 from openbb_xiaoyuan.models.financial_metrics_per_share import (
     XiaoYuanPerShareIndicatorFetcher,
 )
@@ -35,7 +39,6 @@ def vcr_config():
 @pytest.mark.record_http
 def test_xiaoyuan_per_share_indicator_fetcher(credentials=test_credentials):
     """Test XiaoYuanPerShareIndicatorFetcher."""
-    # ["fy", "q1", "q2ytd", "q3ytd", "annual"]
     params = {"symbol": "SH600519", "period": "annual"}
 
     fetcher = XiaoYuanPerShareIndicatorFetcher()
@@ -45,10 +48,18 @@ def test_xiaoyuan_per_share_indicator_fetcher(credentials=test_credentials):
 
 @pytest.mark.record_http
 def test_xiaoyuan_financial_ratios_fetcher(credentials=test_credentials):
-    """Test XiaoYuanPerShareIndicatorFetcher."""
-    # ["fy", "q1", "q2ytd", "q3ytd", "annual"]
+    """Test XiaoYuanFinancialRatiosFetcher."""
     params = {"symbol": "SH600519", "period": "annual", "limit": 4}
-
     fetcher = XiaoYuanFinancialRatiosFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_http
+def test_xiaoyuan_cash_growth_fetcher(credentials=test_credentials):
+    """Test XiaoYuanCashFlowStatementGrowthFetcher."""
+    params = {"symbol": "SH600519", "period": "annual", "limit": 4}
+    # fetcher = XiaoYuanFinancialRatiosFetcher()
+    fetcher = XiaoYuanCashFlowStatementGrowthFetcher()
     result = fetcher.test(params, credentials)
     assert result is None

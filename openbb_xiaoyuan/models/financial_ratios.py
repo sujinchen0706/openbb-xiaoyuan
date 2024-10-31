@@ -1,6 +1,5 @@
 """XiaoYuan Financial Ratios Model."""
 
-from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
 from openbb_core.provider.abstract.fetcher import Fetcher
@@ -10,7 +9,6 @@ from openbb_core.provider.standard_models.financial_ratios import (
 )
 from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 from openbb_core.provider.utils.errors import EmptyDataError
-from openbb_core.provider.utils.helpers import to_snake_case
 from pydantic import Field, model_validator
 
 from openbb_xiaoyuan.utils.references import (
@@ -44,6 +42,7 @@ class XiaoYuanFinancialRatiosData(FinancialRatiosData):
 
     __alias_dict__ = {
         "period_ending": "报告期",
+        # "timestamp": "公告日",
         "current_ratio": "流动比率",
         "quick_ratio": "速动比率",
         # "cash_ratio": "现金比率", 东财有，zvt没有

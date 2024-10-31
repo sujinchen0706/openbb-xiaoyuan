@@ -46,6 +46,9 @@ from openbb_xiaoyuan.models.financial_metrics_per_share import (
 from openbb_xiaoyuan.models.financial_ratios import (
     XiaoYuanFinancialRatiosFetcher,
 )
+from openbb_xiaoyuan.models.cash_flow_growth import (
+    XiaoYuanCashFlowStatementGrowthFetcher,
+)
 
 # mypy: disable-error-code="list-item"
 
@@ -77,5 +80,6 @@ openbb_xiaoyuan_provider = Provider(
         "FinanceCashposition": XiaoYuanFinanceCashpositionFetcher,
         "EquityPledge": XiaoYuanEquityPledgeFetcher,
         "FinancialRatios": XiaoYuanFinancialRatiosFetcher,
+        "CashFlowStatementGrowth": XiaoYuanCashFlowStatementGrowthFetcher,
     },
 )
