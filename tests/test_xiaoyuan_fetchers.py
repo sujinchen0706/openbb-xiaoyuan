@@ -12,6 +12,9 @@ from openbb_xiaoyuan.models.financial_metrics_per_share import (
 from openbb_xiaoyuan.models.financial_ratios import (
     XiaoYuanFinancialRatiosFetcher,
 )
+from openbb_xiaoyuan.models.balance_sheet_growth import (
+    XiaoYuanBalanceSheetGrowthFetcher,
+)
 
 test_credentials = UserService().default_user_settings.credentials.model_dump(
     mode="json"
@@ -59,7 +62,15 @@ def test_xiaoyuan_financial_ratios_fetcher(credentials=test_credentials):
 def test_xiaoyuan_cash_growth_fetcher(credentials=test_credentials):
     """Test XiaoYuanCashFlowStatementGrowthFetcher."""
     params = {"symbol": "SH600519", "period": "annual", "limit": 4}
-    # fetcher = XiaoYuanFinancialRatiosFetcher()
     fetcher = XiaoYuanCashFlowStatementGrowthFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_http
+def test_xiaoyuan_balance_growth_fetcher(credentials=test_credentials):
+    """Test XiaoYuanCashFlowStatementGrowthFetcher."""
+    params = {"symbol": "SH600519", "period": "annual", "limit": 4}
+    fetcher = XiaoYuanBalanceSheetGrowthFetcher()
     result = fetcher.test(params, credentials)
     assert result is None

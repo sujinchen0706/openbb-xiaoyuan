@@ -49,6 +49,9 @@ from openbb_xiaoyuan.models.financial_ratios import (
 from openbb_xiaoyuan.models.cash_flow_growth import (
     XiaoYuanCashFlowStatementGrowthFetcher,
 )
+from openbb_xiaoyuan.models.balance_sheet_growth import (
+    XiaoYuanBalanceSheetGrowthFetcher,
+)
 
 # mypy: disable-error-code="list-item"
 
@@ -81,5 +84,6 @@ openbb_xiaoyuan_provider = Provider(
         "EquityPledge": XiaoYuanEquityPledgeFetcher,
         "FinancialRatios": XiaoYuanFinancialRatiosFetcher,
         "CashFlowStatementGrowth": XiaoYuanCashFlowStatementGrowthFetcher,
+        "BalanceSheetGrowth": XiaoYuanBalanceSheetGrowthFetcher,
     },
 )

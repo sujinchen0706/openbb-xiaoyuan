@@ -394,3 +394,24 @@ async def cash_growth(
     extra_params: ExtraParams,
 ) -> OBBject[BaseModel]:
     return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="BalanceSheetGrowth",
+    examples=[
+        APIEx(
+            parameters={
+                "symbol": "SH600519",
+                "period": "annual",
+                "provider": "openbb_xiaoyuan",
+            }
+        )
+    ],
+)
+async def balance_growth(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject[BaseModel]:
+    return await OBBject.from_query(Query(**locals()))

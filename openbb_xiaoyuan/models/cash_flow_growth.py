@@ -35,7 +35,7 @@ class XiaoYuanCashFlowStatementGrowthQueryParams(CashFlowStatementGrowthQueryPar
         }
     }
 
-    period: Literal["annual", "quarter"] = Field(
+    period: Literal["annual", "ytd"] = Field(
         default="annual",
         description=QUERY_DESCRIPTIONS.get("period", ""),
     )
