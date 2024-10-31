@@ -1,4 +1,4 @@
-"""Calculate Reduction Percentage Standard Model."""
+"""Equity Pledge Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -12,8 +12,8 @@ from openbb_core.provider.utils.descriptions import (
 from pydantic import Field
 
 
-class CalculateReductionPercentageQueryParams(QueryParams):
-    """Total reduction percentage of directors and senior executives over the past yea"""
+class EquityPledgeQueryParams(QueryParams):
+    """Equity Pledge Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
     start_date: Optional[dateType] = Field(
@@ -26,12 +26,11 @@ class CalculateReductionPercentageQueryParams(QueryParams):
     )
 
 
-class CalculateReductionPercentageData(Data):
-    """Total reduction percentage of directors and senior executives over the past yea"""
+class EquityPledgeData(Data):
+    """Equity Pledge Data."""
 
     symbol: str = Field(
-        default=None,
-        description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company."),
+        description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")
     )
     timestamp: Optional[dateType] = Field(
         description=DATA_DESCRIPTIONS.get("timestamp", "The date.")

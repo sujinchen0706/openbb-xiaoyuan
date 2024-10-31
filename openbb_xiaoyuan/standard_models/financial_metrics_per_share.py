@@ -1,4 +1,4 @@
-"""Cash Flow Statement Standard Model."""
+"""Financial Metrics - Per Share Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -11,7 +11,7 @@ from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 
 
 class PerShareIndicatorQueryParams(QueryParams):
-    """财务指标-每股 查询"""
+    """Per Share Indicator Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
@@ -23,12 +23,8 @@ class PerShareIndicatorQueryParams(QueryParams):
 
 
 class PerShareIndicatorData(Data):
-    """财务指标-每股 数据"""
+    """Per Share Indicator Data."""
 
-    period_ending: dateType = Field(description="The end date of the reporting period.")
-    fiscal_period: Optional[str] = Field(
-        description="The fiscal period of the report.", default=None
-    )
-    fiscal_year: Optional[int] = Field(
-        description="The fiscal year of the fiscal period.", default=None
+    period_ending: Optional[dateType] = Field(
+        description="The end date of the reporting period."
     )

@@ -1,4 +1,4 @@
-"""Financial Derivative Standard Model."""
+"""Finance Profit Ability Standard Model."""
 
 from datetime import date as dateType
 from typing import Optional
@@ -12,14 +12,14 @@ from openbb_core.provider.utils.descriptions import (
 from pydantic import Field
 
 
-class FinancialDerivativeQueryParams(QueryParams):
-    """Financial Derivative Query."""
+class FinanceProfitAbilityQueryParams(QueryParams):
+    """Finance Profit Ability Query."""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
 
 
-class FinancialDerivativeData(Data):
-    """Financial Derivative Data."""
+class FinanceProfitAbilityData(Data):
+    """Finance Profit Ability Data."""
 
     symbol: str = Field(
         description=DATA_DESCRIPTIONS.get("symbol", "The symbol of the company.")

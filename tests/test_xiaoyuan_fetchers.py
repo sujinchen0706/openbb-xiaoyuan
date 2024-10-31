@@ -5,6 +5,9 @@ from openbb_core.app.service.user_service import UserService
 from openbb_xiaoyuan.models.financial_metrics_per_share import (
     XiaoYuanPerShareIndicatorFetcher,
 )
+from openbb_xiaoyuan.models.financial_ratios import (
+    XiaoYuanFinancialRatiosFetcher,
+)
 
 test_credentials = UserService().default_user_settings.credentials.model_dump(
     mode="json"
@@ -36,5 +39,16 @@ def test_xiaoyuan_per_share_indicator_fetcher(credentials=test_credentials):
     params = {"symbol": "SH600519", "period": "annual"}
 
     fetcher = XiaoYuanPerShareIndicatorFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_http
+def test_xiaoyuan_financial_ratios_fetcher(credentials=test_credentials):
+    """Test XiaoYuanPerShareIndicatorFetcher."""
+    # ["fy", "q1", "q2ytd", "q3ytd", "annual"]
+    params = {"symbol": "SH600519", "period": "annual", "limit": 4}
+
+    fetcher = XiaoYuanFinancialRatiosFetcher()
     result = fetcher.test(params, credentials)
     assert result is None
