@@ -1,6 +1,5 @@
 """XiaoYuan Financial Ratios Model."""
 
-from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
 from openbb_core.provider.abstract.fetcher import Fetcher
@@ -10,7 +9,6 @@ from openbb_core.provider.standard_models.financial_ratios import (
 )
 from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
 from openbb_core.provider.utils.errors import EmptyDataError
-from openbb_core.provider.utils.helpers import to_snake_case
 from pydantic import Field, model_validator
 
 from openbb_xiaoyuan.utils.references import (
@@ -44,26 +42,63 @@ class XiaoYuanFinancialRatiosData(FinancialRatiosData):
 
     __alias_dict__ = {
         "period_ending": "报告期",
+        # "timestamp": "公告日",
         "current_ratio": "流动比率",
         "quick_ratio": "速动比率",
-        "days_of_sales_outstanding": "应收账款周转天数",
+        # "cash_ratio": "现金比率", 东财有，zvt没有
+        "days_of_sales_outstanding": "应收账款周转天数（含应收票据）",
         "days_of_inventory_outstanding": "存货周转天数",
-        "operating_cycle": "营运周期",
+        "operating_cycle": "营业周期",
         "days_of_payables_outstanding": "应付账款周转天数（含应付票据）",
-        "gross_profit_margin": "毛利率",
-        "operating_profit_margin": "营业利润率",
-        "net_profit_margin": "净利润率",
-        "return_on_assets": "资产回报率",
-        "return_on_equity": "股东权益回报率",
-        "return_on_capital_employed": "资本回报率",
-        "net_income_per_ebt": "净收入/税前利润",
-        "ebt_per_ebit": "税前利润/息税前利润",
-        "ebit_per_revenue": "息税前利润/收入",
-        "debt_ratio": "债务比率",
+        # "cash_conversion_cycle": "现金转换周期",
+        "gross_profit_margin": "销售毛利率（百分比）",
+        "operating_profit_margin": "营业利润比营业总收入（百分比）",  # 营业利润率
+        # "pretax_profit_margin": "税前利润率",
+        "net_profit_margin": "净利润比营业总收入（百分比）",  # 净利润率
+        # "effective_tax_rate": "有效税率",
+        "return_on_assets": "总资产净利率ROA（百分比）",
+        "return_on_equity": "净资产收益率ROE（摊薄）（百分比）",
+        "return_on_capital_employed": "投入资本回报率ROIC（百分比）",
+        "net_income_per_ebt": "净利润比利润总额",
+        "ebt_per_ebit": "利润总额比息税前利润",
+        "ebit_per_revenue": "息税前利润比营业总收入",
+        "debt_ratio": "资产负债率",
         "debt_equity_ratio": "产权比率",
-        "receivables_turnover": "应收账款周转率",
+        # "long_term_debt_to_capitalization": "长期负债资本化率",
+        # "total_debt_to_capitalization": "总负债资本化率",
+        # "interest_coverage": "利息覆盖率",
+        # "cash_flow_to_debt_ratio": "现金流/债务比率",
+        # "company_equity_multiplier": "公司权益乘数",
+        "receivables_turnover": "应收账款周转率（含应收票据）",
         "payables_turnover": "应付账款周转率",
         "inventory_turnover": "存货周转率",
+        # "fixed_asset_turnover": "固定资产周转率",
+        # "asset_turnover": "总资产周转率",
+        # "operating_cash_flow_per_share": "每股营业现金流",
+        # "free_cash_flow_per_share": "每股自由现金流",
+        # "cash_per_share": "每股现金",
+        # "payout_ratio": "派息率",
+        # "operating_cash_flow_sales_ratio": "营业现金流销售比率",
+        # "free_cash_flow_operating_cash_flow_ratio": "自由现金流/营业现金流比率",
+        # "cash_flow_coverage_ratios": "现金流覆盖率",
+        # "short_term_coverage_ratios": "短期覆盖率",
+        # "capital_expenditure_coverage_ratio": "资本支出覆盖率",
+        # "dividend_paid_and_capex_coverage_ratio": "股息和资本支出覆盖率",
+        # "dividend_payout_ratio": "股息支付率",
+        # "price_book_value_ratio": "市净率",
+        # "price_to_book_ratio": "市价/账面价值比率",
+        # "price_to_sales_ratio": "市销率",
+        # "price_earnings_ratio": "市盈率",
+        # "price_to_free_cash_flows_ratio": "市值/自由现金流比率",
+        # "price_to_operating_cash_flows_ratio": "市值/营业现金流比率",
+        # "price_cash_flow_ratio": "市现率",
+        # "price_earnings_to_growth_ratio": "市盈率增长比率",
+        # "price_sales_ratio": "市销率",
+        # "dividend_yield": "股息收益率",
+        # "dividend_yield_percentage": "股息收益率百分比",
+        # "dividend_per_share": "每股股息",
+        # "enterprise_value_multiple": "企业价值倍数",
+        # "price_fair_value": "市价/公允价值比率"
     }
 
     current_ratio: Optional[float] = Field(default=None, description="Current ratio.")
@@ -253,6 +288,8 @@ class XiaoYuanFinancialRatiosFetcher(
 
         reader = get_jindata_reader()
         FIN_METRICS_PER_SHARE = [
+            "流动比率",
+            "速动比率",
             "固定资产周转率",
             "总资产周转率",
             "存货周转率",
@@ -273,8 +310,6 @@ class XiaoYuanFinancialRatiosFetcher(
             "息税前利润比营业总收入",
             "资产负债率",
             "产权比率",
-            "流动比率",
-            "速动比率",
         ]
         report_month = get_report_month(query.period, -query.limit)
         finance_sql = get_query_finance_sql(
@@ -285,7 +320,20 @@ class XiaoYuanFinancialRatiosFetcher(
         )
         if df is None or df.empty:
             raise EmptyDataError()
-        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
+        df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
+        columns_to_divide = [
+            "净资产收益率ROE（摊薄）（百分比）",
+            "总资产净利率ROA（百分比）",
+            "投入资本回报率ROIC（百分比）",
+            "销售毛利率（百分比）",
+            "净利润比营业总收入（百分比）",
+            "营业利润比营业总收入（百分比）",
+            "净利润比利润总额",
+            "利润总额比息税前利润",
+            "息税前利润比营业总收入",
+            "资产负债率",
+        ]
+        df[columns_to_divide] /= 100
         df = df.sort_values(by="报告期", ascending=False)
         data = df.to_dict(orient="records")
         return data
@@ -295,15 +343,15 @@ class XiaoYuanFinancialRatiosFetcher(
         query: XiaoYuanFinancialRatiosQueryParams, data: List[Dict], **kwargs: Any
     ) -> List[XiaoYuanFinancialRatiosData]:
         """Return the transformed data."""
-        results = [
-            {to_snake_case(k).replace("ttm", ""): v for k, v in item.items()}
-            for item in data
-        ]
-        if query.period == "ttm":
-            results[0].update(
-                {"period": "TTM", "date": datetime.now().date().strftime("%Y-%m-%d")}
-            )
-        for item in results:
-            item.pop("symbol", None)
-            item.pop("dividend_yiel_percentage", None)
-        return [XiaoYuanFinancialRatiosData.model_validate(d) for d in results]
+        # results = [
+        #     {to_snake_case(k).replace("ttm", ""): v for k, v in item.items()}
+        #     for item in data
+        # ]
+        # if query.period == "ttm":
+        #     results[0].update(
+        #         {"period": "TTM", "date": datetime.now().date().strftime("%Y-%m-%d")}
+        #     )
+        # for item in results:
+        #     item.pop("symbol", None)
+        #     item.pop("dividend_yiel_percentage", None)
+        return [XiaoYuanFinancialRatiosData.model_validate(d) for d in data]

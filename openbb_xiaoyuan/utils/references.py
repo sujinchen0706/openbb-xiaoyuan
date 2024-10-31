@@ -7,7 +7,6 @@ def extractMonthDayFromTime(time) {
 getFiscalQuarterFromTime = """
 def getFiscalQuarterFromTime(time) {
     i = monthOfYear(time);
-    print i;
     if (i==3){
         return 'q1'
     }
