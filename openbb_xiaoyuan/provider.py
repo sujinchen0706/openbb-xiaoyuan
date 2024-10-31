@@ -43,6 +43,9 @@ from openbb_xiaoyuan.models.st_name import XiaoYuanStNameFetcher
 from openbb_xiaoyuan.models.financial_metrics_per_share import (
     XiaoYuanPerShareIndicatorFetcher,
 )
+from openbb_xiaoyuan.models.financial_ratios import (
+    XiaoYuanFinancialRatiosFetcher,
+)
 
 # mypy: disable-error-code="list-item"
 
@@ -73,5 +76,6 @@ openbb_xiaoyuan_provider = Provider(
         "FinanceRevenueQuality": XiaoYuanFinanceRevenueQualityFetcher,
         "FinanceCashposition": XiaoYuanFinanceCashpositionFetcher,
         "EquityPledge": XiaoYuanEquityPledgeFetcher,
+        "FinancialRatios": XiaoYuanFinancialRatiosFetcher,
     },
 )

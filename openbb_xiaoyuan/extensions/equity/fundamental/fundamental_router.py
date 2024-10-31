@@ -352,3 +352,24 @@ async def equity_pledge(
     extra_params: ExtraParams,
 ) -> OBBject[BaseModel]:
     return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="FinancialRatios",
+    examples=[
+        APIEx(
+            parameters={
+                "symbol": "SH600519",
+                "period": "ytd",
+                "provider": "openbb_xiaoyuan",
+            }
+        )
+    ],
+)
+async def finance_ratios(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject[BaseModel]:
+    return await OBBject.from_query(Query(**locals()))
