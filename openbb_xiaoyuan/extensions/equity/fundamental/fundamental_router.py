@@ -345,7 +345,7 @@ async def finance_cash_position(
         )
     ],
 )
-async def balance(
+async def equity_pledge(
     cc: CommandContext,
     provider_choices: ProviderChoices,
     standard_params: StandardParams,
@@ -366,7 +366,7 @@ async def balance(
         )
     ],
 )
-async def income(
+async def balance(
     cc: CommandContext,
     provider_choices: ProviderChoices,
     standard_params: StandardParams,
@@ -387,7 +387,7 @@ async def income(
         )
     ],
 )
-async def equity_pledge(
+async def income(
     cc: CommandContext,
     provider_choices: ProviderChoices,
     standard_params: StandardParams,
