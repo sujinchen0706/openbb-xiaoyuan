@@ -16,6 +16,9 @@ from openbb_xiaoyuan.models.financial_ratios import (
 from openbb_xiaoyuan.models.balance_sheet_growth import (
     XiaoYuanBalanceSheetGrowthFetcher,
 )
+from openbb_xiaoyuan.models.historical_market_cap import (
+    XiaoYuanHistoricalMarketCapFetcher,
+)
 from openbb_xiaoyuan.models.income_statement_growth import (
     XiaoYuanIncomeStatementGrowthFetcher,
 )
@@ -136,5 +139,20 @@ def test_xiao_yuan_equity_historical_fetcher(credentials=test_credentials):
     }
 
     fetcher = XiaoYuanEquityHistoricalFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_http
+def test_xiao_yuan_historical_market_cap_fetcher(credentials=test_credentials):
+    """Test XiaoYuanHistoricalMarketCapFetcher."""
+    params = {
+        "symbol": "SH600519",
+        "start_date": date(2023, 1, 1),
+        "end_date": date(2023, 1, 10),
+        "interval": "1d",
+    }
+
+    fetcher = XiaoYuanHistoricalMarketCapFetcher()
     result = fetcher.test(params, credentials)
     assert result is None
