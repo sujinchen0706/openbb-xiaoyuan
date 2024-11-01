@@ -48,16 +48,12 @@ from openbb_xiaoyuan.models.financial_ttm_indicators import (
     XiaoYuanFinancialTTMIndicatorsFetcher,
 )
 from openbb_xiaoyuan.models.income_statement import XiaoYuanIncomeStatementFetcher
-
-# from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
+from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
 
 from openbb_xiaoyuan.models.income_statement_growth import (
     XiaoYuanIncomeStatementGrowthFetcher,
 )
 from openbb_xiaoyuan.models.st_name import XiaoYuanStNameFetcher
-from openbb_xiaoyuan.models.financial_metrics_per_share import (
-    XiaoYuanPerShareIndicatorFetcher,
-)
 
 # mypy: disable-error-code="list-item"
 
@@ -72,28 +68,13 @@ openbb_xiaoyuan_provider = Provider(
     # Here, we list out the fetchers showing what our provider can get.
     # The dictionary key is the fetcher's name, used in the `router.py`.
     fetcher_dict={
-        "EnterpriseLifeCycle": XiaoYuanEnterpriseLifeCycleFetcher,
-        "ReductionPercentage": XiaoYuanReductionPercentageFetcher,
-        "StName": XiaoYuanStNameFetcher,
-        "DuPontAnalysis": XiaoYuanDuPontAnalysisFetcher,
-        "FinancialDerivative": XiaoYuanFinancialDerivativeFetcher,
-        "FinancialTTMIndicators": XiaoYuanFinancialTTMIndicatorsFetcher,
-        "PerShareIndicator": XiaoYuanPerShareIndicatorFetcher,
-        "FinanceProfitAbility": XiaoYuanFinanceProfitAbilityFetcher,
-        "FinanceDebtpayingAbility": XiaoYuanFinanceDebtpayingAbilityFetcher,
-        "FinanceGrowthAbility": XiaoYuanFinanceGrowthAbilityFetcher,
         "CashFlowStatement": XiaoYuanCashFlowStatementFetcher,
-        "FinanceOperationalCapability": XiaoYuanFinanceOperationalCapabilityFetcher,
-        "FinanceCapitalStructure": XiaoYuanFinanceCapitalStructureFetcher,
-        "FinanceRevenueQuality": XiaoYuanFinanceRevenueQualityFetcher,
-        "FinanceCashposition": XiaoYuanFinanceCashpositionFetcher,
-        "EquityPledge": XiaoYuanEquityPledgeFetcher,
         "FinancialRatios": XiaoYuanFinancialRatiosFetcher,
         "CashFlowStatementGrowth": XiaoYuanCashFlowStatementGrowthFetcher,
         "BalanceSheetGrowth": XiaoYuanBalanceSheetGrowthFetcher,
         "BalanceSheet": XiaoYuanBalanceSheetFetcher,
         "IncomeStatement": XiaoYuanIncomeStatementFetcher,
         "IncomeStatementGrowth": XiaoYuanIncomeStatementGrowthFetcher,
-        # "KeyMetrics": XiaoYuanKeyMetricsFetcher,
+        "KeyMetrics": XiaoYuanKeyMetricsFetcher,
     },
 )
