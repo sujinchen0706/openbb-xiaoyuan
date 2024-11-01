@@ -124,18 +124,22 @@ class XiaoYuanBalanceSheetGrowthData(BalanceSheetGrowthData):
         json_schema_extra={"x-unit_measurement": "percent", "x-frontend_multiply": 100},
     )
     growth_property_plant_equipment_net: Optional[float] = Field(
+        default=None,
         description="Growth rate of net property, plant, and equipment.",
         json_schema_extra={"x-unit_measurement": "percent", "x-frontend_multiply": 100},
     )
     growth_goodwill: Optional[float] = Field(
+        default=None,
         description="Growth rate of goodwill.",
         json_schema_extra={"x-unit_measurement": "percent", "x-frontend_multiply": 100},
     )
     growth_intangible_assets: Optional[float] = Field(
+        default=None,
         description="Growth rate of intangible assets.",
         json_schema_extra={"x-unit_measurement": "percent", "x-frontend_multiply": 100},
     )
     growth_goodwill_and_intangible_assets: Optional[float] = Field(
+        default=None,
         description="Growth rate of goodwill and intangible assets.",
         json_schema_extra={"x-unit_measurement": "percent", "x-frontend_multiply": 100},
     )
@@ -215,18 +219,23 @@ class XiaoYuanBalanceSheetGrowthData(BalanceSheetGrowthData):
         description="Growth rate of total non-current liabilities.",
     )
     growth_other_liabilities: Optional[float] = Field(
+        default=None,
         description="Growth rate of other liabilities.",
     )
     growth_total_liabilities: Optional[float] = Field(
+        default=None,
         description="Growth rate of total liabilities.",
     )
     growth_common_stock: Optional[float] = Field(
+        default=None,
         description="Growth rate of common stock.",
     )
     growth_retained_earnings: Optional[float] = Field(
+        default=None,
         description="Growth rate of retained earnings.",
     )
     growth_accumulated_other_comprehensive_income: Optional[float] = Field(
+        default=None,
         description="Growth rate of accumulated other comprehensive income/loss.",
     )
     growth_other_total_shareholders_equity: Optional[float] = Field(

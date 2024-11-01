@@ -12,7 +12,7 @@ from openbb_core.provider.utils.descriptions import (
 from pydantic import Field
 
 
-class CalculateReductionPercentageQueryParams(QueryParams):
+class ReductionPercentageQueryParams(QueryParams):
     """Total reduction percentage of directors and senior executives over the past yea"""
 
     symbol: str = Field(description=QUERY_DESCRIPTIONS.get("symbol", ""))
@@ -26,7 +26,7 @@ class CalculateReductionPercentageQueryParams(QueryParams):
     )
 
 
-class CalculateReductionPercentageData(Data):
+class ReductionPercentageData(Data):
     """Total reduction percentage of directors and senior executives over the past yea"""
 
     symbol: str = Field(

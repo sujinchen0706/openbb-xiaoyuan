@@ -68,3 +68,18 @@ def get_report_month(period: str, limit=-4) -> str:
         if month
         else f"context by symbol,factor_name,extractMonthDayFromTime(报告期) order by 报告期 limit {limit};"
     )
+
+
+def get_specific_daily_sql(factor_names: list, symbol: list, date_list: list) -> str:
+    return f"""
+        timestamp = {date_list};
+        date_list_table = table(timestamp);
+        timestamp_table = select datetime(date(timestamp)) from date_list_table;
+        t = select timestamp, symbol, factor_name,value
+            from loadTable("dfs://factors_6M", `cn_factors_1D)
+            where factor_name in {factor_names} and
+            timestamp in timestamp_table
+            and symbol in {symbol};
+        t = select value from t where value is not null pivot by timestamp, symbol, factor_name;
+        t
+        """

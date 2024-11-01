@@ -5,14 +5,12 @@ from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 
 from openbb_xiaoyuan.standard_models.calculate_reduction_percentage import (
-    CalculateReductionPercentageQueryParams,
-    CalculateReductionPercentageData,
+    ReductionPercentageQueryParams,
+    ReductionPercentageData,
 )
 
 
-class XiaoYuanCalculateReductionPercentageQueryParams(
-    CalculateReductionPercentageQueryParams
-):
+class XiaoYuanReductionPercentageQueryParams(ReductionPercentageQueryParams):
     """XiaoYuan Calculate Reduction Percentage Query."""
 
     __json_schema_extra__ = {
@@ -25,16 +23,16 @@ class XiaoYuanCalculateReductionPercentageQueryParams(
         return v.upper()
 
 
-class XiaoYuanCalculateReductionPercentageData(CalculateReductionPercentageData):
+class XiaoYuanReductionPercentageData(ReductionPercentageData):
     """XiaoYuan Calculate Reduction Percentage Data."""
 
     __alias_dict__ = {"calculate_reduction_percentage": "过去一年董监高合计减持比例"}
 
 
-class XiaoYuanCalculateReductionPercentageFetcher(
+class XiaoYuanReductionPercentageFetcher(
     Fetcher[
-        XiaoYuanCalculateReductionPercentageQueryParams,
-        List[XiaoYuanCalculateReductionPercentageData],
+        XiaoYuanReductionPercentageQueryParams,
+        List[XiaoYuanReductionPercentageData],
     ]
 ):
     """Transform the query, extract and transform the data from the XiaoYuan endpoints."""
@@ -42,13 +40,13 @@ class XiaoYuanCalculateReductionPercentageFetcher(
     @staticmethod
     def transform_query(
         params: Dict[str, Any]
-    ) -> XiaoYuanCalculateReductionPercentageQueryParams:
+    ) -> XiaoYuanReductionPercentageQueryParams:
         """Transform the query parameters."""
-        return XiaoYuanCalculateReductionPercentageQueryParams(**params)
+        return XiaoYuanReductionPercentageQueryParams(**params)
 
     @staticmethod
     def extract_data(
-        query: XiaoYuanCalculateReductionPercentageQueryParams,
+        query: XiaoYuanReductionPercentageQueryParams,
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[dict]:
@@ -72,13 +70,11 @@ class XiaoYuanCalculateReductionPercentageFetcher(
 
     @staticmethod
     def transform_data(
-        query: XiaoYuanCalculateReductionPercentageQueryParams,
+        query: XiaoYuanReductionPercentageQueryParams,
         data: List[dict],
         **kwargs: Any,
-    ) -> List[XiaoYuanCalculateReductionPercentageData]:
+    ) -> List[XiaoYuanReductionPercentageData]:
         """Transform the raw data into structured data."""
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
-        return [
-            XiaoYuanCalculateReductionPercentageData.model_validate(d) for d in data
-        ]
+        return [XiaoYuanReductionPercentageData.model_validate(d) for d in data]

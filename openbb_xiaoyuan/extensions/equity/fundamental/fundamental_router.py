@@ -1,4 +1,4 @@
-"""openbb_xiaoyuan fundamental router. """
+"""xiaoyuan fundamental router. """
 
 from openbb_core.app.model.command_context import CommandContext
 from openbb_core.app.model.example import APIEx
@@ -22,7 +22,7 @@ router = Router(prefix="/fundamental")
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -37,14 +37,14 @@ async def enterprise_life_cycle(
 
 
 @router.command(
-    model="CalculateReductionPercentage",
+    model="ReductionPercentage",
     examples=[
         APIEx(
             parameters={
                 "symbol": "SH600519",
                 "start_date": "2021-01-01",
                 "end_date": "2023-01-10",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -66,7 +66,7 @@ async def calculate_reduction_percentage(
                 "symbol": "SH600519",
                 "start_date": "2021-01-01",
                 "end_date": "2023-01-10",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -87,7 +87,7 @@ async def st_name(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -108,7 +108,7 @@ async def du_pont_analysis(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -129,7 +129,7 @@ async def financial_derivative_data(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -144,13 +144,13 @@ async def financial_ttm_indicators(
 
 
 @router.command(
-    model="PerShareIndicatorFetcher",
+    model="PerShareIndicator",
     examples=[
         APIEx(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -171,7 +171,7 @@ async def per_share_indicator(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -192,7 +192,7 @@ async def finance_profit_ability(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -213,7 +213,7 @@ async def finance_growth_ability(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -234,7 +234,7 @@ async def finance_debt_paying_ability(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -255,7 +255,7 @@ async def cash(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -276,7 +276,7 @@ async def finance_operational_capability(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -297,7 +297,7 @@ async def finance_capital_structure(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -318,7 +318,7 @@ async def finance_revenue_quality(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -340,12 +340,75 @@ async def finance_cash_position(
                 "symbol": "SH600519",
                 "start_date": "2020-01-01",
                 "end_date": "2021-01-01",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
+            }
+        )
+    ],
+)
+async def balance(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject[BaseModel]:
+    return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="BalanceSheet",
+    examples=[
+        APIEx(
+            parameters={
+                "symbol": "SH600519",
+                "period": "annual",
+                "provider": "xiaoyuan",
+            }
+        )
+    ],
+)
+async def income(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject[BaseModel]:
+    return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="IncomeStatement",
+    examples=[
+        APIEx(
+            parameters={
+                "symbol": "SH600519",
+                "period": "annual",
+                "provider": "xiaoyuan",
             }
         )
     ],
 )
 async def equity_pledge(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject[BaseModel]:
+    return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="KeyMetrics",
+    examples=[
+        APIEx(
+            parameters={
+                "symbol": "SH600519",
+                "period": "annual",
+                "provider": "xiaoyuan",
+            }
+        )
+    ],
+)
+async def metrics(
     cc: CommandContext,
     provider_choices: ProviderChoices,
     standard_params: StandardParams,
