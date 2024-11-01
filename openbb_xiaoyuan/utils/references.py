@@ -62,11 +62,12 @@ def get_report_month(period: str, limit=-4) -> str:
     month = period_to_month[period]
     return (
         (
-            # f" and monthOfYear(报告期) = {month} context by symbol,timestamp order by 报告期 limit {limit} ;"
-            f" and monthOfYear(报告期) = {month}  context by symbol,factor_name,extractMonthDayFromTime(报告期) order by 报告期 limit {limit} ;"
+            f" and monthOfYear(报告期) = {month}  context by symbol,factor_name,extractMonthDayFromTime(报告期) "
+            f"order by 报告期 limit {limit} ;"
         )
         if month
-        else f"context by symbol,factor_name,extractMonthDayFromTime(报告期) order by 报告期 limit {limit};"
+        else f"context by symbol,factor_name,extractMonthDayFromTime(报告期) "
+        f"order by 报告期 limit {limit};"
     )
 
 

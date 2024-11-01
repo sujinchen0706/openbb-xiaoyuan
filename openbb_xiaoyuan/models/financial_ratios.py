@@ -334,9 +334,8 @@ class XiaoYuanFinancialRatiosFetcher(
             "资产负债率",
         ]
         df[columns_to_divide] /= 100
-        df = df.sort_values(by="报告期", ascending=False)
-        data = df.to_dict(orient="records")
-        return data
+        df.sort_values(by="报告期", ascending=False, inplace=True)
+        return df.to_dict(orient="records")
 
     @staticmethod
     def transform_data(

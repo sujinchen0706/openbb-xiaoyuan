@@ -48,7 +48,12 @@ from openbb_xiaoyuan.models.financial_ttm_indicators import (
     XiaoYuanFinancialTTMIndicatorsFetcher,
 )
 from openbb_xiaoyuan.models.income_statement import XiaoYuanIncomeStatementFetcher
-from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
+
+# from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
+
+from openbb_xiaoyuan.models.income_statement_growth import (
+    XiaoYuanIncomeStatementGrowthFetcher,
+)
 from openbb_xiaoyuan.models.st_name import XiaoYuanStNameFetcher
 from openbb_xiaoyuan.models.financial_metrics_per_share import (
     XiaoYuanPerShareIndicatorFetcher,
@@ -88,6 +93,7 @@ openbb_xiaoyuan_provider = Provider(
         "BalanceSheetGrowth": XiaoYuanBalanceSheetGrowthFetcher,
         "BalanceSheet": XiaoYuanBalanceSheetFetcher,
         "IncomeStatement": XiaoYuanIncomeStatementFetcher,
-        "KeyMetrics": XiaoYuanKeyMetricsFetcher,
+        "IncomeStatementGrowth": XiaoYuanIncomeStatementGrowthFetcher,
+        # "KeyMetrics": XiaoYuanKeyMetricsFetcher,
     },
 )

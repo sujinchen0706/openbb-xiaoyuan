@@ -107,12 +107,10 @@ class XiaoYuanFinanceOperationalCapabilityFetcher(
         )
         if df is None or df.empty:
             raise EmptyDataError()
-        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
+        df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
         df["timestamp"] = df["timestamp"].apply(lambda x: x.strftime("%Y-%m-%d"))
-        df = df.sort_values(by="报告期", ascending=False)
-        data = df.to_dict(orient="records")
-
-        return data
+        df.sort_values(by="报告期", ascending=False, inplace=True)
+        return df.to_dict(orient="records")
 
     @staticmethod
     def transform_data(
