@@ -73,7 +73,7 @@ def test_xiaoyuan_balance_growth_fetcher(credentials=test_credentials):
 @pytest.mark.record_http
 def test_xiaoyuan_cash_flow_fetcher(credentials=test_credentials):
     params = {
-        "symbol": "SH600519,SZ002415,AAPL",
+        "symbol": "SH600519",
         "period": "annual",
     }
 
@@ -82,7 +82,7 @@ def test_xiaoyuan_cash_flow_fetcher(credentials=test_credentials):
     assert result is None
 
 
-# @pytest.mark.record_http
+@pytest.mark.record_http
 def test_xiaoyuan_balance_sheet_fetcher(credentials=test_credentials):
     """Test XiaoYuanPerShareIndicatorFetcher."""
     # ["fy", "q1", "q2ytd", "q3ytd", "annual"]
@@ -104,7 +104,7 @@ def test_xiaoyuan_income_statement_fetcher(credentials=test_credentials):
     assert result is None
 
 
-# @pytest.mark.record_http
+@pytest.mark.record_http
 def test_xiaoyuan_key_metrics_fetcher(credentials=test_credentials):
     """Test XiaoYuanKeyMetricsFetcher."""
     # ["ytd", "annual"]
