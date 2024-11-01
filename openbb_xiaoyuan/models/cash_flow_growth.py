@@ -273,7 +273,7 @@ class XiaoYuanCashFlowStatementGrowthFetcher(
         df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
         columns_to_divide = FIN_METRICS_PER_SHARE
         df[columns_to_divide] /= 100
-        df = df.sort_values(by="报告期", ascending=False)
+        df.sort_values(by="报告期", ascending=False, inplace=True)
         data = df.to_dict(orient="records")
         return data
 

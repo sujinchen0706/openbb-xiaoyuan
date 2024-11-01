@@ -83,8 +83,8 @@ class XiaoYuanEnterpriseLifeCycleFetcher(
         )
         if df is None or df.empty:
             raise EmptyDataError()
-        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
-        df = df.sort_values(by="报告期", ascending=False)
+        df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
+        df.sort_values(by="报告期", ascending=False, inplace=True)
         data = df.to_dict(orient="records")
         return data
 

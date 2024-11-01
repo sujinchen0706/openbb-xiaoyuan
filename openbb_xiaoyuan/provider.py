@@ -2,10 +2,17 @@
 
 from openbb_core.provider.abstract.provider import Provider
 
+from openbb_xiaoyuan.models.balance_sheet import XiaoYuanBalanceSheetFetcher
+from openbb_xiaoyuan.models.balance_sheet_growth import (
+    XiaoYuanBalanceSheetGrowthFetcher,
+)
 from openbb_xiaoyuan.models.calculate_reduction_percentage import (
-    XiaoYuanCalculateReductionPercentageFetcher,
+    XiaoYuanReductionPercentageFetcher,
 )
 from openbb_xiaoyuan.models.cash_flow import XiaoYuanCashFlowStatementFetcher
+from openbb_xiaoyuan.models.cash_flow_growth import (
+    XiaoYuanCashFlowStatementGrowthFetcher,
+)
 from openbb_xiaoyuan.models.du_pont_analysis import XiaoYuanDuPontAnalysisFetcher
 from openbb_xiaoyuan.models.enterprise_life_cycle import (
     XiaoYuanEnterpriseLifeCycleFetcher,
@@ -36,21 +43,20 @@ from openbb_xiaoyuan.models.finance_revenue_quality import (
 from openbb_xiaoyuan.models.financial_derivative_data import (
     XiaoYuanFinancialDerivativeFetcher,
 )
+from openbb_xiaoyuan.models.financial_ratios import XiaoYuanFinancialRatiosFetcher
 from openbb_xiaoyuan.models.financial_ttm_indicators import (
     XiaoYuanFinancialTTMIndicatorsFetcher,
+)
+from openbb_xiaoyuan.models.income_statement import XiaoYuanIncomeStatementFetcher
+
+# from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
+
+from openbb_xiaoyuan.models.income_statement_growth import (
+    XiaoYuanIncomeStatementGrowthFetcher,
 )
 from openbb_xiaoyuan.models.st_name import XiaoYuanStNameFetcher
 from openbb_xiaoyuan.models.financial_metrics_per_share import (
     XiaoYuanPerShareIndicatorFetcher,
-)
-from openbb_xiaoyuan.models.financial_ratios import (
-    XiaoYuanFinancialRatiosFetcher,
-)
-from openbb_xiaoyuan.models.cash_flow_growth import (
-    XiaoYuanCashFlowStatementGrowthFetcher,
-)
-from openbb_xiaoyuan.models.balance_sheet_growth import (
-    XiaoYuanBalanceSheetGrowthFetcher,
 )
 
 # mypy: disable-error-code="list-item"
@@ -67,12 +73,12 @@ openbb_xiaoyuan_provider = Provider(
     # The dictionary key is the fetcher's name, used in the `router.py`.
     fetcher_dict={
         "EnterpriseLifeCycle": XiaoYuanEnterpriseLifeCycleFetcher,
-        "CalculateReductionPercentage": XiaoYuanCalculateReductionPercentageFetcher,
+        "ReductionPercentage": XiaoYuanReductionPercentageFetcher,
         "StName": XiaoYuanStNameFetcher,
         "DuPontAnalysis": XiaoYuanDuPontAnalysisFetcher,
         "FinancialDerivative": XiaoYuanFinancialDerivativeFetcher,
         "FinancialTTMIndicators": XiaoYuanFinancialTTMIndicatorsFetcher,
-        "PerShareIndicatorFetcher": XiaoYuanPerShareIndicatorFetcher,
+        "PerShareIndicator": XiaoYuanPerShareIndicatorFetcher,
         "FinanceProfitAbility": XiaoYuanFinanceProfitAbilityFetcher,
         "FinanceDebtpayingAbility": XiaoYuanFinanceDebtpayingAbilityFetcher,
         "FinanceGrowthAbility": XiaoYuanFinanceGrowthAbilityFetcher,
@@ -85,5 +91,9 @@ openbb_xiaoyuan_provider = Provider(
         "FinancialRatios": XiaoYuanFinancialRatiosFetcher,
         "CashFlowStatementGrowth": XiaoYuanCashFlowStatementGrowthFetcher,
         "BalanceSheetGrowth": XiaoYuanBalanceSheetGrowthFetcher,
+        "BalanceSheet": XiaoYuanBalanceSheetFetcher,
+        "IncomeStatement": XiaoYuanIncomeStatementFetcher,
+        "IncomeStatementGrowth": XiaoYuanIncomeStatementGrowthFetcher,
+        # "KeyMetrics": XiaoYuanKeyMetricsFetcher,
     },
 )
