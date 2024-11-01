@@ -10,16 +10,14 @@ from openbb_xiaoyuan.models.cash_flow import XiaoYuanCashFlowStatementFetcher
 from openbb_xiaoyuan.models.cash_flow_growth import (
     XiaoYuanCashFlowStatementGrowthFetcher,
 )
+from openbb_xiaoyuan.models.equity_historical import XiaoYuanEquityHistoricalFetcher
 from openbb_xiaoyuan.models.financial_ratios import XiaoYuanFinancialRatiosFetcher
 from openbb_xiaoyuan.models.income_statement import XiaoYuanIncomeStatementFetcher
+
 # from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
 
 from openbb_xiaoyuan.models.income_statement_growth import (
     XiaoYuanIncomeStatementGrowthFetcher,
-)
-from openbb_xiaoyuan.models.st_name import XiaoYuanStNameFetcher
-from openbb_xiaoyuan.models.financial_metrics_per_share import (
-    XiaoYuanPerShareIndicatorFetcher,
 )
 
 # mypy: disable-error-code="list-item"
@@ -42,6 +40,7 @@ openbb_xiaoyuan_provider = Provider(
         "BalanceSheet": XiaoYuanBalanceSheetFetcher,
         "IncomeStatement": XiaoYuanIncomeStatementFetcher,
         "IncomeStatementGrowth": XiaoYuanIncomeStatementGrowthFetcher,
+        "EquityHistorical": XiaoYuanEquityHistoricalFetcher,
         # "KeyMetrics": XiaoYuanKeyMetricsFetcher,
     },
 )

@@ -182,8 +182,8 @@ class XiaoYuanKeyMetricsFetcher(
         # 删除不必要的列
         df = df.drop(columns=["timestamp_y", "symbol_y"])
         df = df.rename(columns={"timestamp_x": "timestamp", "symbol_x": "symbol"})
-        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
-        df = df.sort_values(by="报告期", ascending=False)
+        df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
+        df.sort_values(by="报告期", ascending=False, inplace=True)
         data = df.to_dict(orient="records")
         return data
 
