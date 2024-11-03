@@ -73,6 +73,10 @@ class XiaoYuanEquityValuationMultiplesFetcher(
             "投入资本回报率ROIC（TTM）（百分比）",
         ]
         reader = get_jindata_reader()
+        stock_listing_info = reader.get_stocks().symbol.tolist()
+        symbols = [s for s in symbols if s in stock_listing_info]
+        if not symbols:
+            raise EmptyDataError()
         # 获取当前时间
         cur_date = pd.Timestamp.now().strftime("%Y.%m.%d")
         # 获取最近一个报告期的财务数据
@@ -92,7 +96,7 @@ class XiaoYuanEquityValuationMultiplesFetcher(
             for i in date_list
         ]
 
-        daily_sql = get_specific_daily_sql(factors, [query.symbol], date_list)
+        daily_sql = get_specific_daily_sql(factors, symbols, date_list)
         df_daily = reader._run_query(daily_sql)
         df = pd.merge_asof(
             df,
