@@ -8,7 +8,10 @@ from openbb_core.provider.standard_models.cash_flow import (
     CashFlowStatementData,
     CashFlowStatementQueryParams,
 )
-from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
+from openbb_core.provider.utils.descriptions import (
+    QUERY_DESCRIPTIONS,
+    DATA_DESCRIPTIONS,
+)
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field, model_validator
 
@@ -47,6 +50,8 @@ class XiaoYuanCashFlowStatementData(CashFlowStatementData):
         "depreciation_and_amortization": "折旧与摊销",
         "period_ending": "报告期",
     }
+    symbol: str = Field(description=DATA_DESCRIPTIONS.get("symbol", ""))
+
     net_cash_from_operating_activities: Optional[float] = Field(
         description="Net cash from operating activities.", default=None
     )

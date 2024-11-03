@@ -12,6 +12,7 @@ from openbb_core.provider.standard_models.key_metrics import (
     KeyMetricsData,
     KeyMetricsQueryParams,
 )
+from openbb_core.provider.utils.descriptions import DATA_DESCRIPTIONS
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field
 
@@ -60,6 +61,8 @@ class XiaoYuanKeyMetricsData(KeyMetricsData):
         "price_to_book": "市净率（静态）",
         "dividend_yield": "股息率",
     }
+    symbol: str = Field(description=DATA_DESCRIPTIONS.get("symbol", ""))
+
     eps_ttm: Optional[float] = Field(description="Eps ttm.", default=None)
     working_capital: Optional[float] = Field(
         description="Working capital.", default=None
@@ -166,7 +169,7 @@ class XiaoYuanKeyMetricsFetcher(
             raise EmptyDataError()
         date_list = df["报告期"].tolist()
         date_list = [
-            reader.get_adjacent_trade_day(i, 0).strftime("%Y.%m.%d") for i in date_list
+            reader.get_adjacent_trade_day(i, -1).strftime("%Y.%m.%d") for i in date_list
         ]
 
         daily_sql = get_specific_daily_sql(factors, [query.symbol], date_list)

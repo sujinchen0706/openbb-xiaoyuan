@@ -13,47 +13,16 @@ from openbb_xiaoyuan.models.cash_flow import XiaoYuanCashFlowStatementFetcher
 from openbb_xiaoyuan.models.cash_flow_growth import (
     XiaoYuanCashFlowStatementGrowthFetcher,
 )
-from openbb_xiaoyuan.models.du_pont_analysis import XiaoYuanDuPontAnalysisFetcher
-from openbb_xiaoyuan.models.enterprise_life_cycle import (
-    XiaoYuanEnterpriseLifeCycleFetcher,
-)
-from openbb_xiaoyuan.models.equity_pledge import XiaoYuanEquityPledgeFetcher
-from openbb_xiaoyuan.models.finance_capital_structure import (
-    XiaoYuanFinanceCapitalStructureFetcher,
-)
-from openbb_xiaoyuan.models.finance_cash_position import (
-    XiaoYuanFinanceCashpositionFetcher,
-)
-from openbb_xiaoyuan.models.finance_debt_paying_ability import (
-    XiaoYuanFinanceDebtpayingAbilityFetcher,
-)
-from openbb_xiaoyuan.models.finance_growth_ability import (
-    XiaoYuanFinanceGrowthAbilityFetcher,
-)
-from openbb_xiaoyuan.models.finance_operational_capability import (
-    XiaoYuanFinanceOperationalCapabilityFetcher,
-)
-from openbb_xiaoyuan.models.finance_profit_ability import (
-    XiaoYuanFinanceProfitAbilityFetcher,
-)
-from openbb_xiaoyuan.models.finance_revenue_quality import (
-    XiaoYuanFinanceRevenueQualityFetcher,
-)
-
-from openbb_xiaoyuan.models.financial_derivative_data import (
-    XiaoYuanFinancialDerivativeFetcher,
+from openbb_xiaoyuan.models.equity_valuation_multiples import (
+    XiaoYuanEquityValuationMultiplesFetcher,
 )
 from openbb_xiaoyuan.models.financial_ratios import XiaoYuanFinancialRatiosFetcher
-from openbb_xiaoyuan.models.financial_ttm_indicators import (
-    XiaoYuanFinancialTTMIndicatorsFetcher,
-)
 from openbb_xiaoyuan.models.income_statement import XiaoYuanIncomeStatementFetcher
 from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
 
 from openbb_xiaoyuan.models.income_statement_growth import (
     XiaoYuanIncomeStatementGrowthFetcher,
 )
-from openbb_xiaoyuan.models.st_name import XiaoYuanStNameFetcher
 
 # mypy: disable-error-code="list-item"
 
@@ -76,5 +45,6 @@ openbb_xiaoyuan_provider = Provider(
         "IncomeStatement": XiaoYuanIncomeStatementFetcher,
         "IncomeStatementGrowth": XiaoYuanIncomeStatementGrowthFetcher,
         "KeyMetrics": XiaoYuanKeyMetricsFetcher,
+        "EquityValuationMultiples": XiaoYuanEquityValuationMultiplesFetcher,
     },
 )

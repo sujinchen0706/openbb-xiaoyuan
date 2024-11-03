@@ -10,7 +10,10 @@ from openbb_core.provider.standard_models.balance_sheet import (
     BalanceSheetData,
     BalanceSheetQueryParams,
 )
-from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
+from openbb_core.provider.utils.descriptions import (
+    QUERY_DESCRIPTIONS,
+    DATA_DESCRIPTIONS,
+)
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field, field_validator, model_validator
 
@@ -74,6 +77,8 @@ class XiaoYuanBalanceSheetData(BalanceSheetData):
         "accumulated_other_comprehensive_income": "其他综合收益",
         "net_debt": "净债务",
     }
+    symbol: str = Field(description=DATA_DESCRIPTIONS.get("symbol", ""))
+
     accounts_receivable: Optional[float] = Field(
         description="Accounts receivable.", default=None
     )

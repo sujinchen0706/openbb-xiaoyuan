@@ -30,8 +30,8 @@ pytest = "<8.0.0"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.plugins."openbb_core_extension"]
-equity = "openbb_xiaoyuan.router:equity_router"
+#[tool.poetry.plugins."openbb_core_extension"]
+#equity = "openbb_xiaoyuan.router:equity_router"
 
 [tool.poetry.plugins."openbb_provider_extension"]
-openbb = "openbb_xiaoyuan.provider:openbb_xiaoyuan_provider"
+xiaoyuan = "openbb_xiaoyuan:openbb_xiaoyuan_provider"
