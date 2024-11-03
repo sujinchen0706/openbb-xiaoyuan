@@ -9,7 +9,10 @@ from openbb_core.provider.standard_models.income_statement import (
     IncomeStatementData,
     IncomeStatementQueryParams,
 )
-from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
+from openbb_core.provider.utils.descriptions import (
+    QUERY_DESCRIPTIONS,
+    DATA_DESCRIPTIONS,
+)
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field, model_validator
 
@@ -54,7 +57,10 @@ class XiaoYuanIncomeStatementData(IncomeStatementData):
         "net_income_continuing_operations": "持续经营净利润",
         "net_income_discontinued_operations": "终止经营净利润",
         "ebitda": "息税折旧摊销前利润",
+        "depreciation_and_amortization": "折旧与摊销",
     }
+    symbol: str = Field(description=DATA_DESCRIPTIONS.get("symbol", ""))
+
     total_operating_income: Optional[float] = Field(
         description="Total operating income.", default=None
     )
@@ -92,6 +98,9 @@ class XiaoYuanIncomeStatementData(IncomeStatementData):
     ebitda: Optional[float] = Field(
         description="Earnings before interest, taxes, depreciation, and amortization.",
         default=None,
+    )
+    depreciation_and_amortization: Optional[float] = Field(
+        description="Depreciation and amortization.", default=None
     )
 
     @model_validator(mode="before")
@@ -138,6 +147,7 @@ class XiaoYuanIncomeStatementFetcher(
             "持续经营净利润",
             "终止经营净利润",
             "息税折旧摊销前利润",
+            "折旧与摊销",
         ]
         reader = get_jindata_reader()
         report_month = get_report_month(query.period, -query.limit)

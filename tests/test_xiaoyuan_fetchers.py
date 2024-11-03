@@ -3,6 +3,7 @@
 import pytest
 from openbb_core.app.service.user_service import UserService
 
+from openbb_xiaoyuan import XiaoYuanEquityValuationMultiplesFetcher
 from openbb_xiaoyuan.models.balance_sheet import XiaoYuanBalanceSheetFetcher
 from openbb_xiaoyuan.models.balance_sheet_growth import (
     XiaoYuanBalanceSheetGrowthFetcher,
@@ -60,7 +61,7 @@ def test_xiaoyuan_cash_growth_fetcher(credentials=test_credentials):
 
 @pytest.mark.record_http
 def test_xiaoyuan_balance_growth_fetcher(credentials=test_credentials):
-    """Test XiaoYuanCashFlowStatementGrowthFetcher."""
+    """Test XiaoYuanBalanceSheetGrowthFetcher."""
     params = {"symbol": "SH600519", "period": "annual", "limit": 4}
     fetcher = XiaoYuanBalanceSheetGrowthFetcher()
     result = fetcher.test(params, credentials)
@@ -81,7 +82,7 @@ def test_xiaoyuan_cash_flow_fetcher(credentials=test_credentials):
 
 @pytest.mark.record_http
 def test_xiaoyuan_balance_sheet_fetcher(credentials=test_credentials):
-    """Test XiaoYuanPerShareIndicatorFetcher."""
+    """Test XiaoYuanBalanceSheetFetcher."""
     # ["fy", "q1", "q2ytd", "q3ytd", "annual"]
     params = {"symbol": "SH600519", "period": "ytd"}
 
@@ -92,7 +93,7 @@ def test_xiaoyuan_balance_sheet_fetcher(credentials=test_credentials):
 
 @pytest.mark.record_http
 def test_xiaoyuan_income_statement_fetcher(credentials=test_credentials):
-    """Test XiaoYuanPerShareIndicatorFetcher."""
+    """Test XiaoYuanIncomeStatementFetcher."""
     # ["ytd", "annual"]
     params = {"symbol": "SH600519", "period": "ytd"}
 
@@ -103,10 +104,21 @@ def test_xiaoyuan_income_statement_fetcher(credentials=test_credentials):
 
 @pytest.mark.record_http
 def test_xiaoyuan_key_metrics_fetcher(credentials=test_credentials):
-    """Test XiaoYuanPerShareIndicatorFetcher."""
+    """Test XiaoYuanKeyMetricsFetcher."""
     # ["ytd", "annual"]
     params = {"symbol": "SH600519", "period": "ytd"}
 
     fetcher = XiaoYuanKeyMetricsFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_http
+def test_xiaoyuan_equity_valuation_multiples_fetcher(credentials=test_credentials):
+    """Test XiaoYuanIncomeStatementGrowthFetcher."""
+    # ["ytd", "annual"]
+    params = {"symbol": "SH600519"}
+
+    fetcher = XiaoYuanEquityValuationMultiplesFetcher()
     result = fetcher.test(params, credentials)
     assert result is None

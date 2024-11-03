@@ -37,15 +37,14 @@ def get_query_finance_sql(factor_names: list, symbol: list, report_month: str) -
         """
 
 
-def get_1y_query_finance_sql(
-    factor_names: list, symbol: list, report_month: str
+def get_recent_1q_query_finance_sql(
+    factor_names: list, symbol: list, cur_date: str
 ) -> str:
     return f"""
         t = select timestamp,报告期, symbol, factor_name ,value 
-        from loadTable("dfs://finance_factors_1Y", `cn_finance_factors_1Y) 
+        from loadTable("dfs://finance_factors_1Y", `cn_finance_factors_1Q) 
         where factor_name in {factor_names} 
-            and symbol in {symbol} 
-            {report_month} 
+            and symbol in {symbol} and timestamp <= {cur_date} order by timestamp desc limit 1;
 
         t = select value from t where value is not null pivot by 报告期,timestamp,symbol, factor_name;
         t
