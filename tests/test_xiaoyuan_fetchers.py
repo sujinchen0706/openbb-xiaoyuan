@@ -109,7 +109,7 @@ def test_xiaoyuan_income_statement_fetcher(credentials=test_credentials):
 def test_xiaoyuan_key_metrics_fetcher(credentials=test_credentials):
     """Test XiaoYuanKeyMetricsFetcher."""
     # ["ytd", "annual"]
-    params = {"symbol": "SH600519", "period": "ytd"}
+    params = {"symbol": "SH600519,SZ002415", "period": "ytd"}
 
     fetcher = XiaoYuanKeyMetricsFetcher()
     result = fetcher.test(params, credentials)
@@ -120,7 +120,7 @@ def test_xiaoyuan_key_metrics_fetcher(credentials=test_credentials):
 def test_xiaoyuan_equity_valuation_multiples_fetcher(credentials=test_credentials):
     """Test XiaoYuanIncomeStatementGrowthFetcher."""
     # ["ytd", "annual"]
-    params = {"symbol": "SH600519"}
+    params = {"symbol": "SH600519,SZ002415"}
 
     fetcher = XiaoYuanEquityValuationMultiplesFetcher()
     result = fetcher.test(params, credentials)
