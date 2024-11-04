@@ -4,8 +4,12 @@ import pytest
 from datetime import date
 from openbb_core.app.service.user_service import UserService
 
-from openbb_xiaoyuan import XiaoYuanEquityValuationMultiplesFetcher
+from openbb_xiaoyuan import (
+    XiaoYuanEquityValuationMultiplesFetcher,
+    XiaoYuanKeyMetricsFetcher,
+)
 from openbb_xiaoyuan.models.balance_sheet import XiaoYuanBalanceSheetFetcher
+from openbb_xiaoyuan.models.calendar_dividend import XiaoYuanCalendarDividendFetcher
 from openbb_xiaoyuan.models.cash_flow import XiaoYuanCashFlowStatementFetcher
 from openbb_xiaoyuan.models.cash_flow_growth import (
     XiaoYuanCashFlowStatementGrowthFetcher,
@@ -114,6 +118,12 @@ def test_xiaoyuan_key_metrics_fetcher(credentials=test_credentials):
     """Test XiaoYuanKeyMetricsFetcher."""
     # ["ytd", "annual"]
     params = {"symbol": "SH600519,SZ002415", "period": "ytd"}
+
+    fetcher = XiaoYuanKeyMetricsFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
 def test_xiao_yuan_income_statement_growth_fetcher(credentials=test_credentials):
     """Test XiaoYuanIncomeStatementGrowthFetcher."""
     params = {"symbol": "SH600519", "period": "annual", "limit": 4}
@@ -159,5 +169,20 @@ def test_xiaoyuan_equity_valuation_multiples_fetcher(credentials=test_credential
     params = {"symbol": "SH600519,SZ002415"}
 
     fetcher = XiaoYuanEquityValuationMultiplesFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_http
+def test_xiao_yuan_calendar_dividend_fetcher(credentials=test_credentials):
+    """Test XiaoYuanCalendarDividendFetcher."""
+    # ["ytd", "annual"]
+    params = {
+        "symbol": "SH600519,SZ002415",
+        "start_date": date(2023, 1, 1),
+        "end_date": date(2023, 5, 1),
+    }
+
+    fetcher = XiaoYuanCalendarDividendFetcher()
     result = fetcher.test(params, credentials)
     assert result is None

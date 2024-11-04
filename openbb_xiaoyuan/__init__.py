@@ -6,6 +6,7 @@ from openbb_xiaoyuan.models.balance_sheet import XiaoYuanBalanceSheetFetcher
 from openbb_xiaoyuan.models.balance_sheet_growth import (
     XiaoYuanBalanceSheetGrowthFetcher,
 )
+from openbb_xiaoyuan.models.calendar_dividend import XiaoYuanCalendarDividendFetcher
 from openbb_xiaoyuan.models.cash_flow import XiaoYuanCashFlowStatementFetcher
 from openbb_xiaoyuan.models.cash_flow_growth import (
     XiaoYuanCashFlowStatementGrowthFetcher,
@@ -48,5 +49,6 @@ openbb_xiaoyuan_provider = Provider(
         "HistoricalMarketCap": XiaoYuanHistoricalMarketCapFetcher,
         "KeyMetrics": XiaoYuanKeyMetricsFetcher,
         "EquityValuationMultiples": XiaoYuanEquityValuationMultiplesFetcher,
+        "CalendarDividend": XiaoYuanCalendarDividendFetcher,
     },
 )
