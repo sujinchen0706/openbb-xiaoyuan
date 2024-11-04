@@ -521,3 +521,17 @@ async def multiples(
     extra_params: ExtraParams,
 ) -> OBBject[BaseModel]:
     return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="HistoricalDividends",
+    examples=[APIEx(parameters={"symbol": "SH600519", "provider": "xiaoyuan"})],
+)
+async def dividends(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject:
+    """Get historical dividend data for a given company."""
+    return await OBBject.from_query(Query(**locals()))

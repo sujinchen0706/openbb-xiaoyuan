@@ -11,8 +11,8 @@ from openbb_core.provider.standard_models.calendar_dividend import (
     CalendarDividendQueryParams,
 )
 from pandas.errors import EmptyDataError
-
-from pydantic import Field, field_validator
+from pydantic import field_validator
+from openbb_xiaoyuan.utils.references import get_dividend_sql
 
 
 class XiaoYuanCalendarDividendQueryParams(CalendarDividendQueryParams):
@@ -34,16 +34,7 @@ class XiaoYuanCalendarDividendData(CalendarDividendData):
         "ex_dividend_date": "date",
         "record_date": "recordDate",
         "payment_date": "paymentDate",
-        "adjusted_amount": "adjDividend",
     }
-
-    adjusted_amount: Optional[float] = Field(
-        default=None,
-        description="The adjusted-dividend amount.",
-    )
-    label: Optional[str] = Field(
-        default=None, description="Ex-dividend date formatted for display."
-    )
 
     @field_validator(
         "ex_dividend_date",
@@ -93,17 +84,8 @@ class XiaoYuanCalendarDividendFetcher(
 
         historical_start = reader.convert_to_db_date_format(query.start_date)
         historical_end = reader.convert_to_db_date_format(query.end_date)
+        dividend_sql = get_dividend_sql(historical_start, historical_end)
 
-        dividend_sql = f"""
-        t = select timestamp, upper(split(entity_id,'_')[1])+split(entity_id,'_')[2] as symbol, 
-        dividend_per_share_before_tax as dividend,
-        record_date as recordDate,
-        dividend_date as paymentDate,
-        dividend_date as date 
-        from loadTable("dfs://cn_zvt", `dividend_detail) 
-        where dividend_date between {historical_start} and {historical_end}
-        t
-        """
         df = reader._run_query(dividend_sql)
         if df is None or df.empty:
             raise EmptyDataError()

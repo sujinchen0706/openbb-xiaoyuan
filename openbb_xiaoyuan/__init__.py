@@ -16,6 +16,9 @@ from openbb_xiaoyuan.models.equity_valuation_multiples import (
 )
 from openbb_xiaoyuan.models.equity_historical import XiaoYuanEquityHistoricalFetcher
 from openbb_xiaoyuan.models.financial_ratios import XiaoYuanFinancialRatiosFetcher
+from openbb_xiaoyuan.models.historical_dividends import (
+    XiaoYuanHistoricalDividendsFetcher,
+)
 from openbb_xiaoyuan.models.historical_market_cap import (
     XiaoYuanHistoricalMarketCapFetcher,
 )
@@ -31,12 +34,8 @@ from openbb_xiaoyuan.models.income_statement_growth import (
 openbb_xiaoyuan_provider = Provider(
     name="xiaoyuan",
     description="Data provider for openbb-xiaoyuan.",
-    # Only add 'credentials' if they are needed.
-    # For multiple login details, list them all here.
     # credentials=["api_key"],
     website="https://openbb-xiaoyuan.com",
-    # Here, we list out the fetchers showing what our provider can get.
-    # The dictionary key is the fetcher's name, used in the `router.py`.
     fetcher_dict={
         "CashFlowStatement": XiaoYuanCashFlowStatementFetcher,
         "FinancialRatios": XiaoYuanFinancialRatiosFetcher,
@@ -50,5 +49,6 @@ openbb_xiaoyuan_provider = Provider(
         "KeyMetrics": XiaoYuanKeyMetricsFetcher,
         "EquityValuationMultiples": XiaoYuanEquityValuationMultiplesFetcher,
         "CalendarDividend": XiaoYuanCalendarDividendFetcher,
+        "HistoricalDividends": XiaoYuanHistoricalDividendsFetcher,
     },
 )
