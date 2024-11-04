@@ -508,7 +508,7 @@ async def multiples(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
