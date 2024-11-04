@@ -2,7 +2,6 @@
 
 from typing import Any, Dict, List, Literal, Optional
 
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.cash_flow import (
     CashFlowStatementData,
@@ -104,6 +103,8 @@ class XiaoYuanCashFlowStatementFetcher(
         **kwargs: Any,
     ) -> List[XiaoYuanCashFlowStatementData]:
         """Extract the data from the XiaoYuan Finance endpoints."""
+        from jinniuai_data_store.reader import get_jindata_reader
+
         factors = [
             "经营活动产生的现金流量净额",
             "投资活动产生的现金流量净额",
@@ -120,10 +121,9 @@ class XiaoYuanCashFlowStatementFetcher(
         )
         if df is None or df.empty:
             raise EmptyDataError()
-        df["报告期"] = df["报告期"].apply(lambda x: x.strftime("%Y-%m-%d"))
-        df = df.sort_values(by="报告期", ascending=False)
-        data = df.to_dict(orient="records")
-        return data
+        df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
+        df.sort_values(by="报告期", ascending=False, inplace=True)
+        return df.to_dict(orient="records")
 
     @staticmethod
     def transform_data(

@@ -3,7 +3,6 @@
 # pylint: disable=unused-argument
 from typing import Any, Dict, List, Literal, Optional
 
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.income_statement import (
     IncomeStatementData,
@@ -133,6 +132,8 @@ class XiaoYuanIncomeStatementFetcher(
         credentials: Optional[Dict[str, str]],
         **kwargs: Any,
     ) -> List[Dict]:
+        from jinniuai_data_store.reader import get_jindata_reader
+
         factors = [
             "营业总收入",
             "营业总成本",
