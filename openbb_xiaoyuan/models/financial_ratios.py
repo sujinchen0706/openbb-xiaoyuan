@@ -342,15 +342,4 @@ class XiaoYuanFinancialRatiosFetcher(
         query: XiaoYuanFinancialRatiosQueryParams, data: List[Dict], **kwargs: Any
     ) -> List[XiaoYuanFinancialRatiosData]:
         """Return the transformed data."""
-        # results = [
-        #     {to_snake_case(k).replace("ttm", ""): v for k, v in item.items()}
-        #     for item in data
-        # ]
-        # if query.period == "ttm":
-        #     results[0].update(
-        #         {"period": "TTM", "date": datetime.now().date().strftime("%Y-%m-%d")}
-        #     )
-        # for item in results:
-        #     item.pop("symbol", None)
-        #     item.pop("dividend_yiel_percentage", None)
         return [XiaoYuanFinancialRatiosData.model_validate(d) for d in data]

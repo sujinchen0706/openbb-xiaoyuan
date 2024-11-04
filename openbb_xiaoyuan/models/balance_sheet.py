@@ -4,13 +4,15 @@
 
 from typing import Any, Dict, List, Literal, Optional
 
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.balance_sheet import (
     BalanceSheetData,
     BalanceSheetQueryParams,
 )
-from openbb_core.provider.utils.descriptions import QUERY_DESCRIPTIONS
+from openbb_core.provider.utils.descriptions import (
+    QUERY_DESCRIPTIONS,
+    DATA_DESCRIPTIONS,
+)
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field, field_validator, model_validator
 
@@ -74,6 +76,8 @@ class XiaoYuanBalanceSheetData(BalanceSheetData):
         "accumulated_other_comprehensive_income": "其他综合收益",
         "net_debt": "净债务",
     }
+    symbol: str = Field(description=DATA_DESCRIPTIONS.get("symbol", ""))
+
     accounts_receivable: Optional[float] = Field(
         description="Accounts receivable.", default=None
     )
@@ -171,6 +175,8 @@ class XiaoYuanBalanceSheetFetcher(
         **kwargs: Any,
     ) -> List[Dict]:
         """Return the raw data from the XiaoYuan endpoint."""
+        from jinniuai_data_store.reader import get_jindata_reader
+
         factors = [
             "应收账款",
             "预付款项",
@@ -208,8 +214,7 @@ class XiaoYuanBalanceSheetFetcher(
             raise EmptyDataError()
         df["报告期"] = df["报告期"].dt.strftime("%Y-%m-%d")
         df.sort_values(by="报告期", ascending=False, inplace=True)
-        data = df.to_dict(orient="records")
-        return data
+        return df.to_dict(orient="records")
 
     @staticmethod
     def transform_data(
