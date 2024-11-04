@@ -3,7 +3,6 @@
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.equity_valuation_multiples import (
     EquityValuationMultiplesData,
@@ -66,6 +65,8 @@ class XiaoYuanEquityValuationMultiplesFetcher(
         **kwargs: Any,
     ) -> List[Dict]:
         """Return the raw data from the XiaoYuan endpoint."""
+        from jinniuai_data_store.reader import get_jindata_reader
+
         symbols = query.symbol.split(",")
         factors = [
             "市盈率（滚动）",

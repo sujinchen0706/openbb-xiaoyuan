@@ -4,7 +4,6 @@
 
 from typing import Any, Dict, List, Literal, Optional
 
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.balance_sheet import (
     BalanceSheetData,
@@ -176,6 +175,8 @@ class XiaoYuanBalanceSheetFetcher(
         **kwargs: Any,
     ) -> List[Dict]:
         """Return the raw data from the XiaoYuan endpoint."""
+        from jinniuai_data_store.reader import get_jindata_reader
+
         factors = [
             "应收账款",
             "预付款项",

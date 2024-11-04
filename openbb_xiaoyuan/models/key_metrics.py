@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional, Literal
 from warnings import warn
 
 import pandas as pd
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.key_metrics import (
     KeyMetricsData,
@@ -147,6 +146,8 @@ class XiaoYuanKeyMetricsFetcher(
         **kwargs: Any,
     ) -> List[Dict]:
         """Return the raw data from the  XiaoYuan endpoint."""
+        from jinniuai_data_store.reader import get_jindata_reader
+
         factors = [
             "每股收益EPSTTM（元）",
             "营运资本",

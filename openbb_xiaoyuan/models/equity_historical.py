@@ -3,7 +3,6 @@
 # pylint: disable=unused-argument
 
 from dateutil.relativedelta import relativedelta
-from jinniuai_data_store.reader import get_jindata_reader
 from openbb_core.provider.utils.descriptions import (
     DATA_DESCRIPTIONS,
 )
@@ -93,6 +92,8 @@ class XiaoYuanEquityHistoricalFetcher(
         **kwargs: Any,
     ) -> List[XiaoYuanEquityHistoricalData]:
         """Extract the data from the XiaoYuan Finance endpoints."""
+        from jinniuai_data_store.reader import get_jindata_reader
+
         reader = get_jindata_reader()
 
         historical_start = reader.convert_to_db_date_format(
