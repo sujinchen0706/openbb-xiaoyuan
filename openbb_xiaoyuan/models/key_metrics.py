@@ -2,7 +2,7 @@
 
 # pylint: disable=unused-argument
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 from warnings import warn
 
 import pandas as pd
@@ -11,6 +11,10 @@ from openbb_core.provider.abstract.fetcher import Fetcher
 from openbb_core.provider.standard_models.key_metrics import (
     KeyMetricsData,
     KeyMetricsQueryParams,
+)
+from openbb_core.provider.utils.descriptions import (
+    DATA_DESCRIPTIONS,
+    QUERY_DESCRIPTIONS,
 )
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field
@@ -29,7 +33,17 @@ class XiaoYuanKeyMetricsQueryParams(KeyMetricsQueryParams):
     XiaoYuan Key Metrics Query.
     """
 
-    __json_schema_extra__ = {"symbol": {"multiple_items_allowed": True}}
+    __json_schema_extra__ = {
+        "symbol": {"multiple_items_allowed": True},
+        "period": {
+            "choices": ["annual", "ytd"],
+        },
+    }
+
+    period: Literal["annual", "ytd"] = Field(
+        default="annual",
+        description=QUERY_DESCRIPTIONS.get("period", ""),
+    )
 
 
 class XiaoYuanKeyMetricsData(KeyMetricsData):
@@ -60,6 +74,8 @@ class XiaoYuanKeyMetricsData(KeyMetricsData):
         "price_to_book": "市净率（静态）",
         "dividend_yield": "股息率",
     }
+    symbol: str = Field(description=DATA_DESCRIPTIONS.get("symbol", ""))
+
     eps_ttm: Optional[float] = Field(description="Eps ttm.", default=None)
     working_capital: Optional[float] = Field(
         description="Working capital.", default=None
@@ -156,22 +172,26 @@ class XiaoYuanKeyMetricsFetcher(
             "股息率",
         ]
         reader = get_jindata_reader()
+        symbols = query.symbol.split(",")
+        stock_listing_info = reader.get_stocks().symbol.tolist()
+        symbols = [s for s in symbols if s in stock_listing_info]
+        if not symbols:
+            raise EmptyDataError()
         report_month = get_report_month(query.period, -query.limit)
-        finance_sql = get_query_finance_sql(factors, [query.symbol], report_month)
+        finance_sql = get_query_finance_sql(factors, symbols, report_month)
         df = reader._run_query(
             script=extractMonthDayFromTime + getFiscalQuarterFromTime + finance_sql,
         )
-
+        df = df.sort_values(by=["报告期"])
         if df is None or df.empty:
             raise EmptyDataError()
         date_list = df["报告期"].tolist()
         date_list = [
-            reader.get_adjacent_trade_day(i, 0).strftime("%Y.%m.%d") for i in date_list
+            reader.get_adjacent_trade_day(i, -1).strftime("%Y.%m.%d") for i in date_list
         ]
 
-        daily_sql = get_specific_daily_sql(factors, [query.symbol], date_list)
+        daily_sql = get_specific_daily_sql(factors, symbols, date_list)
         df_daily = reader._run_query(daily_sql)
-
         df = pd.merge_asof(
             df,
             df_daily,

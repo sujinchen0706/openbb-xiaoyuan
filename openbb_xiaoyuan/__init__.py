@@ -10,15 +10,16 @@ from openbb_xiaoyuan.models.cash_flow import XiaoYuanCashFlowStatementFetcher
 from openbb_xiaoyuan.models.cash_flow_growth import (
     XiaoYuanCashFlowStatementGrowthFetcher,
 )
+from openbb_xiaoyuan.models.equity_valuation_multiples import (
+    XiaoYuanEquityValuationMultiplesFetcher,
+)
 from openbb_xiaoyuan.models.equity_historical import XiaoYuanEquityHistoricalFetcher
 from openbb_xiaoyuan.models.financial_ratios import XiaoYuanFinancialRatiosFetcher
 from openbb_xiaoyuan.models.historical_market_cap import (
     XiaoYuanHistoricalMarketCapFetcher,
 )
 from openbb_xiaoyuan.models.income_statement import XiaoYuanIncomeStatementFetcher
-
-# from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
-
+from openbb_xiaoyuan.models.key_metrics import XiaoYuanKeyMetricsFetcher
 from openbb_xiaoyuan.models.income_statement_growth import (
     XiaoYuanIncomeStatementGrowthFetcher,
 )
@@ -45,6 +46,7 @@ openbb_xiaoyuan_provider = Provider(
         "IncomeStatementGrowth": XiaoYuanIncomeStatementGrowthFetcher,
         "EquityHistorical": XiaoYuanEquityHistoricalFetcher,
         "HistoricalMarketCap": XiaoYuanHistoricalMarketCapFetcher,
-        # "KeyMetrics": XiaoYuanKeyMetricsFetcher,
+        "KeyMetrics": XiaoYuanKeyMetricsFetcher,
+        "EquityValuationMultiples": XiaoYuanEquityValuationMultiplesFetcher,
     },
 )

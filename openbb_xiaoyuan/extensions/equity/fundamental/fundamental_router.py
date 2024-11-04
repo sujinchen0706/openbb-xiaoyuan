@@ -424,7 +424,7 @@ async def metrics(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -445,7 +445,7 @@ async def finance_ratios(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -466,7 +466,7 @@ async def cash_growth(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -487,7 +487,7 @@ async def balance_growth(
             parameters={
                 "symbol": "SH600519",
                 "period": "annual",
-                "provider": "openbb_xiaoyuan",
+                "provider": "xiaoyuan",
             }
         )
     ],
@@ -499,4 +499,25 @@ async def income_growth(
     extra_params: ExtraParams,
 ) -> OBBject:
     """Get the growth of a company's income statement items over time."""
+    return await OBBject.from_query(Query(**locals()))
+
+
+@router.command(
+    model="EquityValuationMultiples",
+    examples=[
+        APIEx(
+            parameters={
+                "symbol": "SH600519",
+                "period": "annual",
+                "provider": "xiaoyuan",
+            }
+        )
+    ],
+)
+async def multiples(
+    cc: CommandContext,
+    provider_choices: ProviderChoices,
+    standard_params: StandardParams,
+    extra_params: ExtraParams,
+) -> OBBject[BaseModel]:
     return await OBBject.from_query(Query(**locals()))
